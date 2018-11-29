@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using AutoReservation.Dal.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
@@ -8,6 +9,14 @@ namespace AutoReservation.Dal
     public class AutoReservationContext
         : DbContext
     {
+
+//        public DbSet<Auto> Autos { get; set; }
+//
+//        public DbSet<Kunde> Kunden { get; set; }
+//
+//        public DbSet<Reservation> Reservationen { get; set; }
+
+
         public static readonly LoggerFactory LoggerFactory = new LoggerFactory(
             new[] { new ConsoleLoggerProvider((_, logLevel) => logLevel >= LogLevel.Information, true) }
         );
@@ -22,5 +31,17 @@ namespace AutoReservation.Dal
                     .UseSqlServer(ConfigurationManager.ConnectionStrings[nameof(AutoReservationContext)].ConnectionString);
             }
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //            modelBuilder.Entity<Auto>().ToTable("Auto", schema: "dbo");
+
+
+
+//            modelBuilder.Entity<Kunde>().ToTable("Kunde", schema: "dbo");
+//            modelBuilder.Entity<Reservation>().ToTable("Reservation", schema: "dbo");
+
+        }
+
     }
 }

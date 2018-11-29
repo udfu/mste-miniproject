@@ -8,23 +8,23 @@
     ".NETFramework,Version=v4.7.1": []
   },
   "packageFolders": {
-    "C:\\Users\\dfu\\.nuget\\packages\\": {},
+    "C:\\Users\\User\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\dfu\\Documents\\HSR\\3.Semester\\MSTE\\02_Uebungen\\99_Miniprojekt\\mste-miniprojekt\\AutoReservation.Common\\AutoReservation.Common.csproj",
+      "projectUniqueName": "C:\\Users\\User\\git\\3. Semester\\Testate\\mste-miniproject\\AutoReservation.Common\\AutoReservation.Common.csproj",
       "projectName": "AutoReservation.Common",
-      "projectPath": "C:\\Users\\dfu\\Documents\\HSR\\3.Semester\\MSTE\\02_Uebungen\\99_Miniprojekt\\mste-miniprojekt\\AutoReservation.Common\\AutoReservation.Common.csproj",
-      "packagesPath": "C:\\Users\\dfu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\dfu\\Documents\\HSR\\3.Semester\\MSTE\\02_Uebungen\\99_Miniprojekt\\mste-miniprojekt\\AutoReservation.Common\\obj\\",
+      "projectPath": "C:\\Users\\User\\git\\3. Semester\\Testate\\mste-miniproject\\AutoReservation.Common\\AutoReservation.Common.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\User\\git\\3. Semester\\Testate\\mste-miniproject\\AutoReservation.Common\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\dfu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

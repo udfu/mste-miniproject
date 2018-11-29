@@ -15,4 +15,7 @@ AutoReservation.Service.Wcf.Testing/bin/
 AutoReservation.TestEnvironment/obj/
 AutoReservation.TestEnvironment/bin/
 
+#dblock
+.vs/AutoReservation/v15/Server/sqlite3/db.lock
+
 
