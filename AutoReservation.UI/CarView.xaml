@@ -1,0 +1,72 @@
+﻿<Window x:Class="AutoReservation.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AutoReservation.UI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Grid.Column="0">
+            <DockPanel DockPanel.Dock="Top">
+                <TextBlock DockPanel.Dock="Left">Autos</TextBlock>
+                <Button DockPanel.Dock="Right" HorizontalAlignment="Right">Hinzufügen</Button>
+            </DockPanel>
+            <ListView>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Marke"/>
+                        <GridViewColumn Header="Typ"/>
+                        <GridViewColumn Header="Tagestarif"/>
+                        <GridViewColumn Header="Basistarif"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </DockPanel>
+
+        <DockPanel Grid.Column="1">
+            <DockPanel DockPanel.Dock="Top">
+                <TextBlock DockPanel.Dock="Left">Details</TextBlock>
+                <Button DockPanel.Dock="Right" HorizontalAlignment="Right">Speichern</Button>
+                <Button DockPanel.Dock="Right" HorizontalAlignment="Right">Abbrechen</Button>
+                <Button DockPanel.Dock="Right" HorizontalAlignment="Right">Löschen</Button>
+            </DockPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0">Marke</TextBlock>
+                <TextBox Grid.Row="0" Grid.Column="1"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0">Typ</TextBlock>
+                <ComboBox Grid.Row="1" Grid.Column="1"></ComboBox>
+
+                <TextBlock Grid.Row="2" Grid.Column="0">Tagestarif</TextBlock>
+                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                    <TextBox/>
+                    <TextBlock>.-</TextBlock>
+                </StackPanel>
+
+                <TextBlock Grid.Row="3" Grid.Column="0">Basistarif</TextBlock>
+                <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+                    <TextBox/>
+                    <TextBlock>.-</TextBlock>
+                </StackPanel>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Window>
