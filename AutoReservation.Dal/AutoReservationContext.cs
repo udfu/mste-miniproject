@@ -9,16 +9,15 @@ namespace AutoReservation.Dal
     public class AutoReservationContext
         : DbContext
     {
+        public DbSet<Auto> Autos { get; set; }
 
-//        public DbSet<Auto> Autos { get; set; }
-//
-//        public DbSet<Kunde> Kunden { get; set; }
-//
-//        public DbSet<Reservation> Reservationen { get; set; }
+        public DbSet<Kunde> Kunden { get; set; }
+
+        public DbSet<Reservation> Reservationen { get; set; }
 
 
         public static readonly LoggerFactory LoggerFactory = new LoggerFactory(
-            new[] { new ConsoleLoggerProvider((_, logLevel) => logLevel >= LogLevel.Information, true) }
+            new[] {new ConsoleLoggerProvider((_, logLevel) => logLevel >= LogLevel.Information, true)}
         );
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -28,20 +27,21 @@ namespace AutoReservation.Dal
                 optionsBuilder
                     .EnableSensitiveDataLogging()
                     .UseLoggerFactory(LoggerFactory) // Warning: Do not create a new ILoggerFactory instance each time
-                    .UseSqlServer(ConfigurationManager.ConnectionStrings[nameof(AutoReservationContext)].ConnectionString);
+                    .UseSqlServer(ConfigurationManager.ConnectionStrings[nameof(AutoReservationContext)]
+                        .ConnectionString);
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //            modelBuilder.Entity<Auto>().ToTable("Auto", schema: "dbo");
-
-
-
-//            modelBuilder.Entity<Kunde>().ToTable("Kunde", schema: "dbo");
-//            modelBuilder.Entity<Reservation>().ToTable("Reservation", schema: "dbo");
-
+            modelBuilder.Entity<Auto>()
+                .HasDiscriminator<int>("AutoKlasse")
+                .HasValue<LuxusklasseAuto>(0)
+                .HasValue<MittelklasseAuto>(1)
+                .HasValue<StandardAuto>(2);
+                
+            modelBuilder.Entity<Kunde>().ToTable("Kunde", schema: "dbo");
+            modelBuilder.Entity<Reservation>().ToTable("Reservation", schema: "dbo");
         }
-
     }
 }

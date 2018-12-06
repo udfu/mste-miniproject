@@ -6,3 +6,11 @@ C:\Users\dfu\Documents\HSR\3.Semester\MSTE\02_Uebungen\99_Miniprojekt\mste-minip
 C:\Users\dfu\Documents\HSR\3.Semester\MSTE\02_Uebungen\99_Miniprojekt\mste-miniprojekt\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.AssemblyInfo.cs
 C:\Users\dfu\Documents\HSR\3.Semester\MSTE\02_Uebungen\99_Miniprojekt\mste-miniprojekt\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.dll
 C:\Users\dfu\Documents\HSR\3.Semester\MSTE\02_Uebungen\99_Miniprojekt\mste-miniprojekt\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.pdb
+C:\Users\User\git\3. Semester\Testate\mste-miniproject\AutoReservation.Common\bin\Debug\net471\AutoReservation.Common.dll
+C:\Users\User\git\3. Semester\Testate\mste-miniproject\AutoReservation.Common\bin\Debug\net471\AutoReservation.Common.pdb
+C:\Users\User\git\3. Semester\Testate\mste-miniproject\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.csprojAssemblyReference.cache
+C:\Users\User\git\3. Semester\Testate\mste-miniproject\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.csproj.CoreCompileInputs.cache
+C:\Users\User\git\3. Semester\Testate\mste-miniproject\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.AssemblyInfoInputs.cache
+C:\Users\User\git\3. Semester\Testate\mste-miniproject\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.AssemblyInfo.cs
+C:\Users\User\git\3. Semester\Testate\mste-miniproject\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.dll
+C:\Users\User\git\3. Semester\Testate\mste-miniproject\AutoReservation.Common\obj\Debug\net471\AutoReservation.Common.pdb

@@ -457,6 +457,20 @@
         "runtime": {
           "bin/placeholder/AutoReservation.Dal.dll": {}
         }
+      },
+      "AutoReservation.TestEnvironment/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.7.1",
+        "dependencies": {
+          "AutoReservation.Dal": "1.0.0",
+          "Microsoft.EntityFrameworkCore.Relational": "2.1.4"
+        },
+        "compile": {
+          "bin/placeholder/AutoReservation.TestEnvironment.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoReservation.TestEnvironment.dll": {}
+        }
       }
     }
   },
@@ -712,10 +726,11 @@
       ]
     },
     "System.Buffers/4.4.0": {
-      "sha512": "AwarXzzoDwX6BgrhjoJsk6tUezZEozOT5Y9QKF94Gl4JK91I4PIIBkBco9068Y9/Dra8Dkbie99kXB8+1BaYKw==",
+      "sha512": "VCJfpWcYG1gT3WwivZWgT0KaqY678MQBvrOI2si6V8GHeQOtuW+wpiv5ss4KyfGG+cFFdPNaI+nw2/kExCtGgQ==",
       "type": "package",
       "path": "system.buffers/4.4.0",
       "files": [
+        ".signature.p7s",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "lib/netcoreapp2.0/_._",
@@ -983,10 +998,11 @@
       ]
     },
     "System.Numerics.Vectors/4.4.0": {
-      "sha512": "UiLzLW+Lw6HLed1Hcg+8jSRttrbuXv7DANVj0DkL9g6EnnzbL75EB7EWsw5uRbhxd/4YdG8li5XizGWepmG3PQ==",
+      "sha512": "ZhdgJiihSOGD325jClouHy8WSPtwFSj6K1OymoEyN0Wc9Y6X2OVxn65VKfTWHQOYM+QljlVSreporVNvZm8rEA==",
       "type": "package",
       "path": "system.numerics.vectors/4.4.0",
       "files": [
+        ".signature.p7s",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "lib/MonoAndroid10/_._",
@@ -1187,34 +1203,39 @@
       "type": "project",
       "path": "../AutoReservation.Dal/AutoReservation.Dal.csproj",
       "msbuildProject": "../AutoReservation.Dal/AutoReservation.Dal.csproj"
+    },
+    "AutoReservation.TestEnvironment/1.0.0": {
+      "type": "project",
+      "path": "../AutoReservation.TestEnvironment/AutoReservation.TestEnvironment.csproj",
+      "msbuildProject": "../AutoReservation.TestEnvironment/AutoReservation.TestEnvironment.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.7.1": [
       "AutoReservation.BusinessLayer >= 1.0.0",
-      "C:\\Users\\dfu\\Documents\\HSR\\3.Semester\\MSTE\\02_Uebungen\\99_Miniprojekt\\Vorgabe\\AutoReservation.TestEnvironment\\AutoReservation.TestEnvironment.csproj",
+      "AutoReservation.TestEnvironment >= 1.0.0",
       "xunit >= 2.4.0",
       "xunit.runner.visualstudio >= 2.4.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\dfu\\.nuget\\packages\\": {},
+    "C:\\Users\\User\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\dfu\\Documents\\HSR\\3.Semester\\MSTE\\02_Uebungen\\99_Miniprojekt\\Vorgabe\\AutoReservation.BusinessLayer.Testing\\AutoReservation.BusinessLayer.Testing.csproj",
+      "projectUniqueName": "C:\\Users\\User\\git\\3. Semester\\Testate\\mste-miniproject\\AutoReservation.BusinessLayer.Testing\\AutoReservation.BusinessLayer.Testing.csproj",
       "projectName": "AutoReservation.BusinessLayer.Testing",
-      "projectPath": "C:\\Users\\dfu\\Documents\\HSR\\3.Semester\\MSTE\\02_Uebungen\\99_Miniprojekt\\Vorgabe\\AutoReservation.BusinessLayer.Testing\\AutoReservation.BusinessLayer.Testing.csproj",
-      "packagesPath": "C:\\Users\\dfu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\dfu\\Documents\\HSR\\3.Semester\\MSTE\\02_Uebungen\\99_Miniprojekt\\Vorgabe\\AutoReservation.BusinessLayer.Testing\\obj\\",
+      "projectPath": "C:\\Users\\User\\git\\3. Semester\\Testate\\mste-miniproject\\AutoReservation.BusinessLayer.Testing\\AutoReservation.BusinessLayer.Testing.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\User\\git\\3. Semester\\Testate\\mste-miniproject\\AutoReservation.BusinessLayer.Testing\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\dfu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1227,11 +1248,11 @@
       "frameworks": {
         "net471": {
           "projectReferences": {
-            "C:\\Users\\dfu\\Documents\\HSR\\3.Semester\\MSTE\\02_Uebungen\\99_Miniprojekt\\Vorgabe\\AutoReservation.BusinessLayer\\AutoReservation.BusinessLayer.csproj": {
-              "projectPath": "C:\\Users\\dfu\\Documents\\HSR\\3.Semester\\MSTE\\02_Uebungen\\99_Miniprojekt\\Vorgabe\\AutoReservation.BusinessLayer\\AutoReservation.BusinessLayer.csproj"
+            "C:\\Users\\User\\git\\3. Semester\\Testate\\mste-miniproject\\AutoReservation.BusinessLayer\\AutoReservation.BusinessLayer.csproj": {
+              "projectPath": "C:\\Users\\User\\git\\3. Semester\\Testate\\mste-miniproject\\AutoReservation.BusinessLayer\\AutoReservation.BusinessLayer.csproj"
             },
-            "C:\\Users\\dfu\\Documents\\HSR\\3.Semester\\MSTE\\02_Uebungen\\99_Miniprojekt\\Vorgabe\\AutoReservation.TestEnvironment\\AutoReservation.TestEnvironment.csproj": {
-              "projectPath": "C:\\Users\\dfu\\Documents\\HSR\\3.Semester\\MSTE\\02_Uebungen\\99_Miniprojekt\\Vorgabe\\AutoReservation.TestEnvironment\\AutoReservation.TestEnvironment.csproj"
+            "C:\\Users\\User\\git\\3. Semester\\Testate\\mste-miniproject\\AutoReservation.TestEnvironment\\AutoReservation.TestEnvironment.csproj": {
+              "projectPath": "C:\\Users\\User\\git\\3. Semester\\Testate\\mste-miniproject\\AutoReservation.TestEnvironment\\AutoReservation.TestEnvironment.csproj"
             }
           }
         }
@@ -1258,16 +1279,5 @@
         }
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1105",
-      "level": "Error",
-      "message": "Unable to find project information for 'C:\\Users\\dfu\\Documents\\HSR\\3.Semester\\MSTE\\02_Uebungen\\99_Miniprojekt\\Vorgabe\\AutoReservation.TestEnvironment\\AutoReservation.TestEnvironment.csproj'. The project file may be invalid or missing targets required for restore.",
-      "libraryId": "C:\\Users\\dfu\\Documents\\HSR\\3.Semester\\MSTE\\02_Uebungen\\99_Miniprojekt\\Vorgabe\\AutoReservation.TestEnvironment\\AutoReservation.TestEnvironment.csproj",
-      "targetGraphs": [
-        ".NETFramework,Version=v4.7.1"
-      ]
-    }
-  ]
+  }
 }
