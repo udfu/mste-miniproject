@@ -13,6 +13,8 @@ namespace AutoReservation.BusinessLayer.Testing
 
         public ReservationAvailabilityTest()
         {
+        //gruisig gemäss Bauer
+
             // Prepare reservation
             //Reservation reservation = Target.GetById(1);
             //reservation.Von = DateTime.Today;

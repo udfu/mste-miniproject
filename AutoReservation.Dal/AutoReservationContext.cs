@@ -35,10 +35,12 @@ namespace AutoReservation.Dal
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Auto>()
+                .ToTable("Auto", "dbo")
                 .HasDiscriminator<int>("AutoKlasse")
                 .HasValue<LuxusklasseAuto>(0)
                 .HasValue<MittelklasseAuto>(1)
-                .HasValue<StandardAuto>(2);
+                .HasValue<StandardAuto>(2)
+                ;
                 
             modelBuilder.Entity<Kunde>().ToTable("Kunde", schema: "dbo");
             modelBuilder.Entity<Reservation>().ToTable("Reservation", schema: "dbo");
