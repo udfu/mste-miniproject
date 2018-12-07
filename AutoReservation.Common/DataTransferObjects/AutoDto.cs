@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public string Marke { get; set; }
         public int Tagestarif { get; set; }
-        public byte? RowVersion { get; set; }
+        public byte?[] RowVersion { get; set; }
         public AutoKlasse AutoKlasse { get; set; }
         public int? Basistarif { get; set; }
 
