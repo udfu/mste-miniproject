@@ -9,18 +9,40 @@ namespace AutoReservation.Common.DataTransferObjects
         public string Vorname { get; set; }
         public DateTime Geburtsdatum { get; set; }
         public byte[] RowVersion { get; set; }
-        
+
         public KundeDto()
         {
-
         }
 
-        public KundeDto(string nachname, string vorname, DateTime geburtsdatum, byte[] rowVersion)
+        public KundeDto(int id, string nachname, string vorname, DateTime geburtsdatum)
         {
+            Id = id;
             Nachname = nachname;
             Vorname = vorname;
             Geburtsdatum = geburtsdatum;
-            RowVersion = rowVersion;
+        }
+
+        public override bool Equals(object obj)
+        {
+
+            if (!(obj is KundeDto))
+            {
+                return false;
+            }
+
+            var item = (KundeDto) obj;
+
+            if (this.Id == item.Id && this.Nachname == item.Nachname && this.Vorname == item.Vorname && this.Geburtsdatum == item.Geburtsdatum)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
         }
 
         public override string ToString()

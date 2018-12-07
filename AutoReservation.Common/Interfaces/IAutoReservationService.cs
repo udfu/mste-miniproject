@@ -10,31 +10,36 @@ namespace AutoReservation.Common.Interfaces
     [ServiceContract]
     public interface IAutoReservationService
     {
-//        [OperationContract]
-//        bool CheckAvailability(int autoId);
-//
-//        [OperationContract]
-//        Collection<AutoDto> ReadAutoDtos(Collection<int> autoId);
-//
-//        [OperationContract]
-//        AutoDto ReadAutoDto(int autoId);
+        //        [OperationContract]
+        //        bool CheckAvailability(int autoId);
+        //
+        //        [OperationContract]
+        //        Collection<AutoDto> ReadAutoDtos(Collection<int> autoId);
+        //
+        //        [OperationContract]
+        //        AutoDto ReadAutoDto(int autoId);
 
-//        [OperationContract]
-//        void insertAuto(string marke, int tagestarif, )
+        //        [OperationContract]
+        //        void insertAuto(string marke, int tagestarif, )
 
-        [OperationContract]
+       
+
+    [OperationContract]
         List<KundeDto> ReadKundeDtos();
 
         [OperationContract]
         KundeDto ReadKundeDto(int kundeId);
 
         [OperationContract]
-        void insertKunde(int id, string nachname, string vorname, DateTime geburtsDatum, byte[] rowVersion);
+        [FaultContract(typeof(OutOfRangeFault))]
+        void insertKunde(string nachname, string vorname, DateTime geburtsDatum);
 
         [OperationContract]
-        void updateKunde(int id, string nachname, string vorname, DateTime geburtsDatum, byte[] rowVersion);
+        [FaultContract(typeof(OutOfRangeFault))]
+        void updateKunde(int id, string nachname, string vorname, DateTime geburtsDatum);
 
         [OperationContract]
+        [FaultContract(typeof(OutOfRangeFault))]
         void deleteKunde(int id);
     }
 }
