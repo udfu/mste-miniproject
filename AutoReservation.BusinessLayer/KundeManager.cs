@@ -30,11 +30,11 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        public void AddKunde(Kunde newKunde)
+        public void AddKunde(String Nachname, String Vorname, DateTime Geburtsdatum)
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                context.Kunden.Add(newKunde);
+                context.Kunden.Add(new Kunde { Nachname = Nachname, Vorname = Vorname, Geburtsdatum = Geburtsdatum });
                 context.SaveChanges();
             }
         }
