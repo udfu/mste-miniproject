@@ -11,6 +11,7 @@ namespace AutoReservation.Dal.Entities
         public string Marke { get; set; }
         [Required]
         public int Tagestarif { get; set; }
+        [Timestamp]
         public byte[] RowVersion { get; set; }
         
 
