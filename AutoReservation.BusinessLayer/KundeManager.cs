@@ -51,7 +51,7 @@ namespace AutoReservation.BusinessLayer
                 {
                     kunde.Id = id;
                 }
-                if(kunde.Geburtsdatum!=Geburtsdatum && Geburtsdatum != null)
+                if(kunde.Geburtsdatum!=Geburtsdatum)
                 {
                     kunde.Geburtsdatum = Geburtsdatum;
                 }

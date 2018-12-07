@@ -22,8 +22,7 @@ namespace AutoReservation.BusinessLayer.Testing
         public void UpdateKundeTest()
         {
             Target.UpdateKunde(1, new DateTime(1994,9,17), "Fuoco", "Dario");
-            Kunde kunde = Target.GetKundeById(1);
-            Assert.Equal("Dario", kunde.Vorname);
+            Assert.Equal("Dario", Target.GetKundeById(1).Vorname);
         }
 
         [Fact]
@@ -36,6 +35,7 @@ namespace AutoReservation.BusinessLayer.Testing
         [Fact]
         public void ListKundeByIdTest()
         {
+            Target.AddKunde("Bucher", "Daniel", new DateTime(1995, 05, 05));
             Kunde kunde = Target.GetKundeById(5);
             Assert.Equal("Daniel", kunde.Vorname);
         }
@@ -43,6 +43,7 @@ namespace AutoReservation.BusinessLayer.Testing
         [Fact]
         public void DeleteKundeTest()
         {
+            Target.AddKunde("Bucher", "Daniel", new DateTime(1995, 05, 05));
             Target.deleteKunde(5);
             Assert.Equal(4, Target.GetKunden().Count);
         }
