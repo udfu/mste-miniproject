@@ -14,9 +14,12 @@ namespace AutoReservation.Dal.Entities
         public int KundeId { get; set; }
         public DateTime Von { get; set; }
         public DateTime Bis { get; set; }
-        public byte? RowVersion { get; set; }
+        public byte?[] RowVersion { get; set; }
         
-
+        [NotMapped]
+        public Auto Auto { get; set; }
+        [NotMapped]
+        public Kunde Kunde { get; set; }
 
     }
 }

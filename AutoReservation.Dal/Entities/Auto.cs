@@ -11,7 +11,7 @@ namespace AutoReservation.Dal.Entities
         public string Marke { get; set; }
         [Required]
         public int Tagestarif { get; set; }
-        public byte? RowVersion { get; set; }
+        public byte?[] RowVersion { get; set; }
         
 
         public virtual ICollection<Reservation> Reservationen { get; set; }
