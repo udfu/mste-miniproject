@@ -8,6 +8,7 @@ using AutoReservation.Common.Interfaces;
 using AutoReservation.BusinessLayer;
 using AutoReservation.Dal.Entities;
 using AutoReservation.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoReservation.Service.Wcf
 {
@@ -62,7 +63,7 @@ namespace AutoReservation.Service.Wcf
             {
                 kundenManager.UpdateKunde(id, geburtsDatum, nachname, vorname);
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException e)
             {
                 OutOfRangeFault fault = new OutOfRangeFault
                 {
@@ -70,6 +71,12 @@ namespace AutoReservation.Service.Wcf
                 };
 
                 throw new FaultException<OutOfRangeFault>(fault);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                ConcurrencyFault fault = new ConcurrencyFault();
+
+                throw new FaultException<ConcurrencyFault>(fault);
             }
                   
         }

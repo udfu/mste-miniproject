@@ -74,6 +74,7 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void GetKundeByIdWithIllegalIdTest()
         {
+            //Problem: unterschiedliches Resultat bei Server und Client!?
             Assert.Throws<FaultException<AutoReservation.Common.OutOfRangeFault>>(() => Target.ReadKundeDto(5));
         }
 
@@ -183,7 +184,10 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void UpdateKundeWithOptimisticConcurrencyTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            //???
+            Target.updateKunde(1, "hans", "meier", new DateTime(1111, 1, 1));
+            Action action = () => Target.updateKunde(1, "sepp", "zimmermann", new DateTime(1111, 1, 1));
+            Assert.Throws<FaultException<AutoReservation.Common.ConcurrencyFault>>(action);
         }
 
         [Fact]
