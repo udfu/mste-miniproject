@@ -15,6 +15,7 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void GetAutosTest()
         {
+
             throw new NotImplementedException("Test not implemented.");
         }
 
@@ -22,6 +23,7 @@ namespace AutoReservation.Service.Wcf.Testing
         public void GetKundenTest()
         {
             throw new NotImplementedException("Test not implemented.");
+
         }
 
         [Fact]

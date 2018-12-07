@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.ServiceModel;
@@ -22,16 +23,16 @@ namespace AutoReservation.Common.Interfaces
 //        void insertAuto(string marke, int tagestarif, )
 
         [OperationContract]
-        Collection<KundeDto> ReadKundeDtos(Collection<int> kundenId);
+        List<KundeDto> ReadKundeDtos();
 
         [OperationContract]
-        AutoDto ReadKundeDto(int kundeId);
+        KundeDto ReadKundeDto(int kundeId);
 
         [OperationContract]
-        void insertKunde(int id, string nachname, string vorname, DateTime geburtsDatum, byte?[] rowVersion);
+        void insertKunde(int id, string nachname, string vorname, DateTime geburtsDatum, byte[] rowVersion);
 
         [OperationContract]
-        void updateKunde(int id, string nachname, string vorname, DateTime geburtsDatum, byte?[] rowVersion);
+        void updateKunde(int id, string nachname, string vorname, DateTime geburtsDatum, byte[] rowVersion);
 
         [OperationContract]
         void deleteKunde(int id);
