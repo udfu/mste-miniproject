@@ -13,11 +13,10 @@ namespace AutoReservation.BusinessLayer.Testing
         private KundeManager Target => target ?? (target = new KundeManager());
 
         [Fact]
-        public void KundeTest()
+        public void GetKundenTest()
         {
-
+            Assert.Equal(4, Target.GetKunden().Count);
         }
-
 
         [Fact]
         public void UpdateKundeTest()
@@ -30,16 +29,23 @@ namespace AutoReservation.BusinessLayer.Testing
         [Fact]
         public void AddKundeTest()
         {
-            Kunde newKunde = new Kunde { Id = 5, Nachname = "Bucher", Vorname = "Daniel", Geburtsdatum = new DateTime(1995, 05, 05) };
-            Target.AddKunde(newKunde);
+            Target.AddKunde("Bucher","Daniel", new DateTime(1995, 05, 05));
             Kunde dani = Target.GetKundeById(5);
             Assert.Equal("Bucher", dani.Nachname);
         }
+        [Fact]
+        public void ListKundeByIdTest()
+        {
+            Kunde kunde = Target.GetKundeById(5);
+            Assert.Equal("Daniel", kunde.Vorname);
+        }
 
         [Fact]
-        public void GetKundenTest()
-        {   
+        public void DeleteKundeTest()
+        {
+            Target.deleteKunde(5);
             Assert.Equal(4, Target.GetKunden().Count);
         }
+
     }
 }

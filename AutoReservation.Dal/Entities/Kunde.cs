@@ -12,7 +12,7 @@ namespace AutoReservation.Dal.Entities
         public string Nachname { get; set; }
         public string Vorname { get; set; }
         public DateTime Geburtsdatum { get; set; } 
-        public byte?[] RowVersion { get; set; }
+        public byte[] RowVersion { get; set; }
         
 
         public virtual ICollection<Reservation> Reservationen { get; set; }
