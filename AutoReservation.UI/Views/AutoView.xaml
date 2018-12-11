@@ -51,20 +51,20 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" Grid.Column="0">Marke</TextBlock>
-                <TextBox Grid.Row="0" Grid.Column="1"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Marke}"/>
 
                 <TextBlock Grid.Row="1" Grid.Column="0">Typ</TextBlock>
                 <ComboBox Grid.Row="1" Grid.Column="1"></ComboBox>
 
                 <TextBlock Grid.Row="2" Grid.Column="0">Tagestarif</TextBlock>
                 <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
-                    <TextBox/>
+                    <TextBox Text="{Binding Tagestarif}"/>
                     <TextBlock>.-</TextBlock>
                 </StackPanel>
 
                 <TextBlock Grid.Row="3" Grid.Column="0">Basistarif</TextBlock>
                 <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
-                    <TextBox/>
+                    <TextBox Text="{Binding Basistarif}"/>
                     <TextBlock>.-</TextBlock>
                 </StackPanel>
             </Grid>
