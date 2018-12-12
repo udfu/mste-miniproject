@@ -27,7 +27,7 @@
                 <Label Content="Geburtsdatum" Grid.Column="2" FontWeight="Bold" />
             </Grid>
 
-            <ListBox ItemsSource="{Binding KundenDtos}">
+            <ListBox Name="ListOfKunde" ItemsSource="{Binding KundenDtos}">
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="dataTransferObjects:KundeDto">
                         <Grid>
@@ -38,7 +38,7 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="{Binding Nachname}"/>
                             <TextBlock Grid.Column="1" Text="{Binding Vorname}"/>
-                            <TextBlock Grid.Column="2" Text="{Binding Geburtsdatum}"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Geburtsdatum, StringFormat={}dd.MM.yyyy}"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -64,14 +64,14 @@
                 <Label Content="Vorname" Grid.Row="2" />
                 <Label Content="Geburtsdatum" Grid.Row="3" />
 
-                <TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" />
-                <TextBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Top"/>
-                <TextBox Grid.Column="1" Grid.Row="3" VerticalAlignment="Top"/>
+                <TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" Text="{Binding CurrentKundeDto.Nachname}"/>
+                <TextBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Top" Text="{Binding CurrentKundeDto.Vorname}"/>
+                <TextBox Grid.Column="1" Grid.Row="3" VerticalAlignment="Top" Text="{Binding CurrentKundeDto.Geburtsdatum, StringFormat={}dd.MM.yyyy}" />
 
                     <WrapPanel Grid.Column="1" HorizontalAlignment="Right">
                         <Button Content="Refresh"  HorizontalAlignment="left" VerticalAlignment="Top" Margin="5, 5, 2,1"/>
                         <Button Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2, 5, 2, 1"/>
-                        <Button Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2, 5, 2,1"/>
+                        <!-- <Button Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2, 5, 2,1" Command="{Binding DeleteCommand} CommandParameter="{Binding SelectedIndex}" /> -->
                         <Button Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2, 5, 2,1"/>
                     </WrapPanel>
                 

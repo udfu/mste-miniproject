@@ -15,6 +15,7 @@ namespace AutoReservation.UI.Views
     {
 
         public KundeViewModel KundeVm { get; set; }
+       
 
         public KundeView()
         {
@@ -22,6 +23,7 @@ namespace AutoReservation.UI.Views
 
             KundeVm = new KundeViewModel();
             DataContext = KundeVm;
+            ListOfKunde.SelectionChanged += KundeVm.SelectedIndexChanged;
         }
     }
 }
