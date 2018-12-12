@@ -71,6 +71,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ViewModels\AutoViewModel.cs" />
+    <Compile Include="ViewModels\ReservationViewModel.cs" />
+    <Compile Include="Views\ReservationView.xaml.cs">
+      <DependentUpon>ReservationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AutoView.xaml.cs">
       <DependentUpon>AutoView.xaml</DependentUpon>
     </Compile>
@@ -101,6 +105,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\ReservationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\AutoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
