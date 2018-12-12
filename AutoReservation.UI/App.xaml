@@ -4,7 +4,6 @@
              xmlns:local="clr-namespace:AutoReservation.UI"
              StartupUri="Views/AutoView.xaml">
 
->>>>>>> 0466aaff71bfee97d0e0f326b9ac73ac93ce400b
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
