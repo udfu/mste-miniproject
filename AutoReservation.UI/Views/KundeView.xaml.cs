@@ -1,8 +1,10 @@
 ﻿using System.Collections.ObjectModel;
+using System.ServiceModel;
 using System.Windows;
-
 using AutoReservation.Common.DataTransferObjects;
+using AutoReservation.Common.Interfaces;
 using AutoReservation.Service.Wcf;
+using AutoReservation.UI.ViewModels;
 
 namespace AutoReservation.UI.Views
 {
@@ -11,19 +13,15 @@ namespace AutoReservation.UI.Views
     /// </summary>
     public partial class KundeView : Window
     {
-        private AutoReservationService _reservationService;
 
-       public ObservableCollection<KundeDto> KundenDtos { get; set; }
-      
+        public KundeViewModel KundeVm { get; set; }
+
         public KundeView()
         {
             InitializeComponent();
 
-            _reservationService = new AutoReservationService();
-            KundenDtos = new ObservableCollection<KundeDto>(_reservationService.ReadKundeDtos());
-            DataContext = this;
-
-
+            KundeVm = new KundeViewModel();
+            DataContext = KundeVm;
         }
     }
 }
