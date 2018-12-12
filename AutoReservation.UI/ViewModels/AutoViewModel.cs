@@ -1,4 +1,4 @@
-﻿namespace AutoReservation.UI.ViewModels
+﻿namespace AutoReservation.UI
 {
     public enum AutoTyp
     {
@@ -9,11 +9,11 @@
 
     public class AutoViewModel
     {
-        public int Id;
-        public string Marke;
-        public AutoTyp Typ;
-        public double Tagestarif;
-        public double BasisTarif;
+        public int Id { get; set; }
+        public string Marke { get; set; }
+        public AutoTyp Typ { get; set; }
+        public double Tagestarif { get; set; }
+        public double BasisTarif { get; set; }
     }
 
     public class AutoMock
