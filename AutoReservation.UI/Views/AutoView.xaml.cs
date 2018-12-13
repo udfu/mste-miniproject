@@ -7,8 +7,7 @@ namespace AutoReservation.UI
         public AutoView()
         {
             InitializeComponent();
-            // DataContext = new AutoViewModel();
-            DataContext = AutoMock.Voiture;
+            DataContext = AutoMock.AutoShowroom;
         }
     }
 }

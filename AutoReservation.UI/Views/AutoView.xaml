@@ -19,13 +19,13 @@
                 <TextBlock DockPanel.Dock="Left">Autos</TextBlock>
                 <Button DockPanel.Dock="Right" HorizontalAlignment="Right">Hinzufügen</Button>
             </DockPanel>
-            <ListView>
+            <ListView ItemsSource="{Binding Autos}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Marke"/>
-                        <GridViewColumn Header="Typ"/>
-                        <GridViewColumn Header="Tagestarif"/>
-                        <GridViewColumn Header="Basistarif"/>
+                        <GridViewColumn Header="Marke" DisplayMemberBinding="{Binding Marke}"/>
+                        <GridViewColumn Header="Typ" DisplayMemberBinding="{Binding Typ}"/>
+                        <GridViewColumn Header="Tagestarif" DisplayMemberBinding="{Binding Tagestarif}"/>
+                        <GridViewColumn Header="Basistarif" DisplayMemberBinding="{Binding Basistarif}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -35,7 +35,6 @@
             <DockPanel DockPanel.Dock="Top">
                 <TextBlock DockPanel.Dock="Left">Details</TextBlock>
                 <Button DockPanel.Dock="Right" HorizontalAlignment="Right">Speichern</Button>
-                <Button DockPanel.Dock="Right" HorizontalAlignment="Right">Abbrechen</Button>
                 <Button DockPanel.Dock="Right" HorizontalAlignment="Right">Löschen</Button>
             </DockPanel>
             <Grid>
@@ -52,20 +51,22 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" Grid.Column="0">Marke</TextBlock>
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Marke}"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedAuto.Marke}"/>
 
                 <TextBlock Grid.Row="1" Grid.Column="0">Typ</TextBlock>
-                <ComboBox Grid.Row="1" Grid.Column="1"></ComboBox>
+                <ComboBox Grid.Row="1" Grid.Column="1"
+                          SelectedItem="{Binding SelectedAuto.Typ}"
+                          ItemsSource="{Binding AutoTypValues}"/>
 
                 <TextBlock Grid.Row="2" Grid.Column="0">Tagestarif</TextBlock>
                 <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
-                    <TextBox Text="{Binding Tagestarif}"/>
+                    <TextBox Text="{Binding SelectedAuto.Tagestarif}"/>
                     <TextBlock>.-</TextBlock>
                 </StackPanel>
 
                 <TextBlock Grid.Row="3" Grid.Column="0">Basistarif</TextBlock>
                 <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
-                    <TextBox Text="{Binding Basistarif}"/>
+                    <TextBox Text="{Binding SelectedAuto.Basistarif}"/>
                     <TextBlock>.-</TextBlock>
                 </StackPanel>
             </Grid>
