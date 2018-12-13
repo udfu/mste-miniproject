@@ -13,7 +13,7 @@ namespace AutoReservation.BusinessLayer.Testing
         [Fact]
         public void ScenarioOkay01Test()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Assert.True(Target.DateRangeCheck(DateTime.Today, DateTime.Today.AddDays(2)));
         }
 
         [Fact]
