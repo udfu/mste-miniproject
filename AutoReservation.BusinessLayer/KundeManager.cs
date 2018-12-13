@@ -3,6 +3,7 @@ using AutoReservation.Dal.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoReservation.BusinessLayer
 {
@@ -39,30 +40,31 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        public void UpdateKunde(int id, DateTime Geburtsdatum,String Nachname, String Vorname)
+        public void UpdateKunde(Kunde kunde)
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                Kunde kunde =context
-                    .Kunden
-                    .Single(c => c.Id == id);
+                //Kunde kunde =context
+                //    .Kunden
+                //    .Single(c => c.Id == id);
 
-                if(kunde.Id != id)
-                {
-                    kunde.Id = id;
-                }
-                if(kunde.Geburtsdatum!=Geburtsdatum)
-                {
-                    kunde.Geburtsdatum = Geburtsdatum;
-                }
-                if (kunde.Nachname != Nachname && Nachname != null)
-                {
-                    kunde.Nachname = Nachname;
-                }
-                if(kunde.Vorname != Vorname && Vorname != null)
-                {
-                    kunde.Vorname = Vorname;
-                }
+                //if(kunde.Id != id)
+                //{
+                //    kunde.Id = id;
+                //}
+                //if(kunde.Geburtsdatum!=Geburtsdatum)
+                //{
+                //    kunde.Geburtsdatum = Geburtsdatum;
+                //}
+                //if (kunde.Nachname != Nachname && Nachname != null)
+                //{
+                //    kunde.Nachname = Nachname;
+                //}
+                //if(kunde.Vorname != Vorname && Vorname != null)
+                //{
+                //    kunde.Vorname = Vorname;
+                //}
+                context.Entry(kunde).State = EntityState.Modified;
                 context.SaveChanges();
             }
         }

@@ -24,7 +24,6 @@ namespace AutoReservation.Common.DataTransferObjects
 
         public override bool Equals(object obj)
         {
-
             if (!(obj is KundeDto))
             {
                 return false;
@@ -32,7 +31,8 @@ namespace AutoReservation.Common.DataTransferObjects
 
             var item = (KundeDto) obj;
 
-            if (this.Id == item.Id && this.Nachname == item.Nachname && this.Vorname == item.Vorname && this.Geburtsdatum == item.Geburtsdatum)
+            if (this.Id == item.Id && this.Nachname == item.Nachname && this.Vorname == item.Vorname &&
+                this.Geburtsdatum == item.Geburtsdatum)
             {
                 return true;
             }

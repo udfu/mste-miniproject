@@ -158,11 +158,13 @@ namespace AutoReservation.Service.Wcf.Testing
             DateTime birthDate = new DateTime(1995, 12, 12);
             int id = 1;
 
-            Target.updateKunde(1, lastName, name, birthDate);
+            KundeDto kunde = new KundeDto(id, lastName, name, birthDate);
 
-            KundeDto expectedDto = new KundeDto(id, lastName, name, birthDate);
+            Target.updateKunde(kunde);
 
-            Assert.Equal(expectedDto, Target.ReadKundeDto(id));
+//            KundeDto expectedDto = new KundeDto(id, lastName, name, birthDate);
+
+            Assert.Equal(kunde, Target.ReadKundeDto(id));
         }
 
         [Fact]
@@ -184,9 +186,14 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void UpdateKundeWithOptimisticConcurrencyTest()
         {
-            //???
-            Target.updateKunde(1, "hans", "meier", new DateTime(1111, 1, 1));
-            Action action = () => Target.updateKunde(1, "sepp", "zimmermann", new DateTime(1111, 1, 1));
+            KundeDto kunde = Target.ReadKundeDto(1);
+            KundeDto sameKunde = kunde;
+
+            kunde.Nachname = "Fuoco";
+            Target.updateKunde(kunde);
+
+            sameKunde.Vorname = "Dario";
+            Action action = () => Target.updateKunde(sameKunde);
             Assert.Throws<FaultException<AutoReservation.Common.ConcurrencyFault>>(action);
         }
 

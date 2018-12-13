@@ -28,6 +28,7 @@ namespace AutoReservation.Common.Interfaces
         List<KundeDto> ReadKundeDtos();
 
         [OperationContract]
+        [FaultContract(typeof(OutOfRangeFault))]
         KundeDto ReadKundeDto(int kundeId);
 
         [OperationContract]
@@ -36,7 +37,7 @@ namespace AutoReservation.Common.Interfaces
 
         [OperationContract]
         [FaultContract(typeof(OutOfRangeFault))]
-        void updateKunde(int id, string nachname, string vorname, DateTime geburtsDatum);
+        void updateKunde(KundeDto kunde);
 
         [OperationContract]
         [FaultContract(typeof(OutOfRangeFault))]
