@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
@@ -12,11 +13,14 @@ namespace AutoReservation.UI.ViewModels
         public ObservableCollection<KundeDto> KundenDtos { get; set; }
         public KundeDto CurrentKundeDto { get; set; }
         public RelayCommand<KundeDto> DeleteCommand { get; set; }
-
+        public RelayCommand<object[]> SaveCommand { get; set; }
+        
+       
         public KundeViewModel()
         {
             KundenDtos = new ObservableCollection<KundeDto>(AppViewModel.Target.ReadKundeDtos());
             DeleteCommand = new RelayCommand<KundeDto>(kunde => Remove());
+            SaveCommand = new RelayCommand<object[]>(values => Save(values));
         }
 
         public void Remove()
@@ -28,6 +32,24 @@ namespace AutoReservation.UI.ViewModels
             OnPropertyChanged(nameof(CurrentKundeDto));
         }
 
+        public void Save(object[] values)
+        {
+            CurrentKundeDto.Nachname = ((TextBox) values[0]).Text;
+            CurrentKundeDto.Vorname = ((TextBox) values[1]).Text;
+            CurrentKundeDto.Geburtsdatum = DateTime.ParseExact(((TextBox) values[2]).Text, "dd.MM.yyyy", null);
+           
+            AppViewModel.Target.updateKunde(CurrentKundeDto);
+
+            Refresh();
+            //            OnPropertyChanged(nameof(CurrentKundeDto));
+//            OnPropertyChanged(nameof(KundenDtos));
+           
+        }
+
+        public void Refresh()
+        {
+            KundenDtos = new ObservableCollection<KundeDto>();
+        }
 
         public void SelectedIndexChanged(object sender, System.EventArgs e)
         {

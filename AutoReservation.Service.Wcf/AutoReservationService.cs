@@ -79,7 +79,6 @@ namespace AutoReservation.Service.Wcf
         public void InsertAuto(AutoDto newAuto)
         {
             WriteActualMethod();
-
             _autoManager.AddAuto(newAuto.ConvertToEntity());
         }
 

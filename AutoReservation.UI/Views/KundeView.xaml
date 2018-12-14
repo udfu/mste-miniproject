@@ -5,9 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoReservation.UI.Views"
         xmlns:dataTransferObjects="clr-namespace:AutoReservation.Common.DataTransferObjects;assembly=AutoReservation.Common"
+        xmlns:ui="clr-namespace:AutoReservation.UI"
         mc:Ignorable="d"
         Title="KundeView" Height="450" Width="800">
 
+    <Window.Resources>
+        <ui:ParamConverter x:Key="ParamConverter" />
+    </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -36,9 +40,9 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{Binding Nachname}"/>
-                            <TextBlock Grid.Column="1" Text="{Binding Vorname}"/>
-                            <TextBlock Grid.Column="2" Text="{Binding Geburtsdatum, StringFormat={}dd.MM.yyyy}"/>
+                            <TextBlock Grid.Column="0" Text="{Binding Nachname}" />
+                            <TextBlock Grid.Column="1" Text="{Binding Vorname}" />
+                            <TextBlock Grid.Column="2" Text="{Binding Geburtsdatum, StringFormat={}dd.MM.yyyy}" />
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -48,9 +52,9 @@
 
             <Grid Margin="0, 0, 5, 0">
                 <!-- <Border Background="Black" BorderThickness="1" CornerRadius="8, 0, 8, 0"> -->
-                    <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="2*"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -58,26 +62,40 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <Label Content="Details" FontWeight="Bold" FontSize="20"/>
+                <Label Content="Details" FontWeight="Bold" FontSize="20" />
 
                 <Label Content="Nachname" Grid.Row="1" />
                 <Label Content="Vorname" Grid.Row="2" />
                 <Label Content="Geburtsdatum" Grid.Row="3" />
 
-                <TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" Text="{Binding CurrentKundeDto.Nachname}"/>
-                <TextBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Top" Text="{Binding CurrentKundeDto.Vorname}"/>
-                <TextBox Grid.Column="1" Grid.Row="3" VerticalAlignment="Top" Text="{Binding CurrentKundeDto.Geburtsdatum, StringFormat={}dd.MM.yyyy}" />
+                <TextBox Name="NachnameBox" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top"
+                         Text="{Binding CurrentKundeDto.Nachname, Mode=OneWay}" />
 
-                    <WrapPanel Grid.Column="1" HorizontalAlignment="Right">
-                        <Button Content="Refresh"  HorizontalAlignment="left" VerticalAlignment="Top" Margin="5, 5, 2,1"/>
-                        <Button Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2, 5, 2, 1"/>
-                        <Button Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2, 5, 2,1" Command="{Binding DeleteCommand}" />
-                        <Button Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2, 5, 2,1"/>
-                    </WrapPanel>
-                
+
+                <TextBox Name="VornameBox" Grid.Column="1" Grid.Row="2" VerticalAlignment="Top"
+                         Text="{Binding CurrentKundeDto.Vorname, Mode=OneWay}" />
+                <TextBox Name="GeburtsdatumBox" Grid.Column="1" Grid.Row="3" VerticalAlignment="Top"
+                         Text="{Binding CurrentKundeDto.Geburtsdatum, StringFormat={}dd.MM.yyyy, Mode=OneWay}" />
+
+                <WrapPanel Grid.Column="1" HorizontalAlignment="Right">
+                    <Button Content="Refresh" HorizontalAlignment="left" VerticalAlignment="Top" Margin="5, 5, 2,1" />
+                    <Button Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2, 5, 2, 1" />
+                    <Button Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2, 5, 2,1"
+                            Command="{Binding DeleteCommand}" />
+                    <Button Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2, 5, 2,1"
+                            Command="{Binding SaveCommand}">
+                        <Button.CommandParameter>
+                            <MultiBinding Converter="{StaticResource ParamConverter}">
+                                <Binding ElementName="NachnameBox" />
+                                <Binding ElementName="VornameBox" />
+                                <Binding ElementName="GeburtsdatumBox" />
+                            </MultiBinding>
+                        </Button.CommandParameter>
+
+                    </Button>
+                </WrapPanel>
+
             </Grid>
-            
-
 
         </Grid>
 
