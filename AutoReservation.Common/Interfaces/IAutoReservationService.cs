@@ -22,9 +22,28 @@ namespace AutoReservation.Common.Interfaces
         //        [OperationContract]
         //        void insertAuto(string marke, int tagestarif, )
 
-       
 
-    [OperationContract]
+        [OperationContract]
+        List<AutoDto> ReadAutoDtos();
+
+        [OperationContract]
+        [FaultContract(typeof(OutOfRangeFault))]
+        AutoDto ReadAutoDto(int autoId);
+
+        [OperationContract]
+        [FaultContract(typeof(OutOfRangeFault))]
+        void InsertAuto(AutoDto newAuto);
+
+        [OperationContract]
+        [FaultContract(typeof(OutOfRangeFault))]
+        [FaultContract(typeof(ConcurrencyFault))]
+        void UpdateAuto(AutoDto auto);
+
+        [OperationContract]
+        [FaultContract(typeof(OutOfRangeFault))]
+        void DeleteAuto(int id);
+        
+        [OperationContract]
         List<KundeDto> ReadKundeDtos();
 
         [OperationContract]

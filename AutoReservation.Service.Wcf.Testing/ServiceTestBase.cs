@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ServiceModel;
 using AutoReservation.Common.DataTransferObjects;
 using AutoReservation.Common.Interfaces;
+using AutoReservation.Dal.Entities;
 using AutoReservation.TestEnvironment;
 using Xunit;
 
@@ -19,7 +20,12 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void GetAutosTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            List<AutoDto> list = Target.ReadAutoDtos();
+
+            Assert.Equal(new AutoDto("Fiat Punto", 50, AutoKlasse.Standard), list[0]);
+            Assert.Equal(new AutoDto("VW Golf", 120, AutoKlasse.Mittelklasse), list[1]);
+            Assert.Equal(new AutoDto("Audi S6", 180, AutoKlasse.Luxusklasse, 50), list[2]);
+            Assert.Equal(new AutoDto("Fiat 500", 75, AutoKlasse.Standard), list[3]);
         }
 
         [Fact]
@@ -46,7 +52,7 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void GetAutoByIdTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Assert.Equal(new AutoDto("Fiat Punto", 50, AutoKlasse.Standard), Target.ReadAutoDto(1));
         }
 
         [Fact]
@@ -68,13 +74,12 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void GetAutoByIdWithIllegalIdTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Assert.Throws<FaultException<AutoReservation.Common.OutOfRangeFault>>(() => Target.ReadAutoDto(5));
         }
 
         [Fact]
         public void GetKundeByIdWithIllegalIdTest()
         {
-            //Problem: unterschiedliches Resultat bei Server und Client!?
             Assert.Throws<FaultException<AutoReservation.Common.OutOfRangeFault>>(() => Target.ReadKundeDto(5));
         }
 
@@ -91,7 +96,9 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void InsertAutoTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            AutoDto auto = new AutoDto("Fiat Punto", 50, AutoKlasse.Standard);
+            Target.InsertAuto(auto);
+            Assert.True(Target.ReadAutoDtos().Exists(e => e.Equals(auto)));
         }
 
         [Fact]
@@ -122,7 +129,8 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void DeleteAutoTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Target.DeleteAuto(1);
+            Assert.False(Target.ReadAutoDtos().Exists(e => e.Id == 1));
         }
 
         [Fact]
@@ -147,23 +155,20 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void UpdateAutoTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            AutoDto auto = Target.ReadAutoDto(1);
+
+            auto.Marke = "Aston Martin";
+            Target.UpdateAuto(auto);
+            Assert.Equal(auto, Target.ReadAutoDto(1));
         }
 
         [Fact]
         public void UpdateKundeTest()
         {
-
             KundeDto kunde = Target.ReadKundeDto(1);
 
             kunde.Nachname = "Fuoco";
-
-           
-
             Target.updateKunde(kunde);
-
-//            KundeDto expectedDto = new KundeDto(id, lastName, name, birthDate);
-
             Assert.Equal(kunde, Target.ReadKundeDto(1));
         }
 
@@ -180,7 +185,14 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void UpdateAutoWithOptimisticConcurrencyTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            AutoDto auto = Target.ReadAutoDto(1);
+            AutoDto sameAuto = Target.ReadAutoDto(1);
+
+            auto.Marke = "Aston Martin";
+            Target.UpdateAuto(auto);
+
+            sameAuto.Marke = "Tesla Roadster";
+            Assert.Throws<FaultException<AutoReservation.Common.ConcurrencyFault>>(() => Target.UpdateAuto(sameAuto));
         }
 
         [Fact]

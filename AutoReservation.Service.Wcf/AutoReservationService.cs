@@ -14,25 +14,55 @@ namespace AutoReservation.Service.Wcf
 {
     public class AutoReservationService : IAutoReservationService
     {
-        KundeManager kundenManager = new KundeManager();
+        private readonly AutoManager _autoManager = new AutoManager();
+        private readonly KundeManager _kundenManager = new KundeManager();
+
 
         private static void WriteActualMethod()
             => Console.WriteLine($"Calling: {new StackTrace().GetFrame(1).GetMethod().Name}");
+
+
+        public List<AutoDto> ReadAutoDtos()
+        {
+            WriteActualMethod();
+
+            return DtoConverter.ConvertToDtos(_autoManager.GetAutos());
+        }
 
         public List<KundeDto> ReadKundeDtos()
         {
             WriteActualMethod();
 
-            return DtoConverter.ConvertToDtos(kundenManager.GetKunden());
+            return DtoConverter.ConvertToDtos(_kundenManager.GetKunden());
         }
 
+        public AutoDto ReadAutoDto(int autoId)
+        {
+            WriteActualMethod();
+
+            try
+            {
+                return DtoConverter.ConvertToDto(_autoManager.GetAutoById(autoId));
+            }
+
+            catch (InvalidOperationException)
+            {
+                OutOfRangeFault fault = new OutOfRangeFault()
+                {
+                    Operation = "Read"
+                };
+
+                throw  new FaultException<OutOfRangeFault>(fault);
+            }
+        }
+        
         public KundeDto ReadKundeDto(int kundeId)
         {
             WriteActualMethod();
 
             try
             {
-                return DtoConverter.ConvertToDto(kundenManager.GetKundeById(kundeId));
+                return DtoConverter.ConvertToDto(_kundenManager.GetKundeById(kundeId));
             }
 
             catch (InvalidOperationException)
@@ -43,24 +73,55 @@ namespace AutoReservation.Service.Wcf
                 };
 
                 throw new FaultException<OutOfRangeFault>(fault);
-            }
-
-           
+            }  
         }
+
+        public void InsertAuto(AutoDto newAuto)
+        {
+            WriteActualMethod();
+
+            _autoManager.AddAuto(newAuto.ConvertToEntity());
+        }
+
 
         public void insertKunde(string nachname, string vorname, DateTime geburtsDatum)
         {
             WriteActualMethod();
 
-            kundenManager.AddKunde(nachname, vorname, geburtsDatum);
+            _kundenManager.AddKunde(nachname, vorname, geburtsDatum);
            }
+
+
+        public void UpdateAuto(AutoDto auto)
+        {
+            WriteActualMethod();
+
+            try
+            {
+                _autoManager.UpdateAuto(auto.ConvertToEntity());
+            }
+            catch (InvalidOperationException)
+            {
+                OutOfRangeFault fault = new OutOfRangeFault
+                {
+                    Operation = "update"
+                };
+
+                throw new FaultException<OutOfRangeFault>(fault);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                ConcurrencyFault fault = new ConcurrencyFault();
+                throw new FaultException<ConcurrencyFault>(fault);
+            }
+        }
 
         public void updateKunde(KundeDto kunde)
         {
             WriteActualMethod();
             try
             {
-                kundenManager.UpdateKunde(kunde.ConvertToEntity());
+                _kundenManager.UpdateKunde(kunde.ConvertToEntity());
             }
             catch (InvalidOperationException e)
             {
@@ -80,13 +141,32 @@ namespace AutoReservation.Service.Wcf
            
         }
 
+        public void DeleteAuto(int id)
+        {
+            WriteActualMethod();
+
+            try
+            {
+                _autoManager.DeleteAuto(id);
+            }
+            catch (InvalidOperationException)
+            {
+                OutOfRangeFault fault = new OutOfRangeFault()
+                {
+                    Operation = "delete"
+                };
+
+                throw new FaultException<OutOfRangeFault>(fault);
+            }
+        }
+
         public void deleteKunde(int id)
         {
             WriteActualMethod();
 
             try
             {
-                kundenManager.deleteKunde(id);
+                _kundenManager.deleteKunde(id);
             }
             catch (InvalidOperationException)
             {
@@ -99,5 +179,8 @@ namespace AutoReservation.Service.Wcf
             }
             
         }
+
+
+
     }
 }
