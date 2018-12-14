@@ -17,6 +17,27 @@ namespace AutoReservation.Dal.Entities
 
         public virtual ICollection<Reservation> Reservationen { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Auto))
+            {
+                return false;
+            }
+
+            var item = (Auto) obj;
+
+            if (Id == item.Id && Marke == item.Marke && Tagestarif == item.Tagestarif)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
     }
 
     public class StandardAuto : Auto
@@ -27,6 +48,15 @@ namespace AutoReservation.Dal.Entities
     public class LuxusklasseAuto : Auto
     {
         public int? Basistarif { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (base.Equals(obj) && obj is LuxusklasseAuto && Basistarif == ((LuxusklasseAuto) obj).Basistarif)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 
     public class MittelklasseAuto : Auto
