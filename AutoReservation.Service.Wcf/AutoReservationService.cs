@@ -55,32 +55,6 @@ namespace AutoReservation.Service.Wcf
             kundenManager.AddKunde(nachname, vorname, geburtsDatum);
            }
 
-//        public void updateKunde(int id, string nachname, string vorname, DateTime geburtsDatum)
-//        {
-//            WriteActualMethod();
-//
-//            try
-//            {
-//                kundenManager.UpdateKunde(id, geburtsDatum, nachname, vorname);
-//            }
-//            catch (InvalidOperationException e)
-//            {
-//                OutOfRangeFault fault = new OutOfRangeFault
-//                {
-//                    Operation = "update"
-//                };
-//
-//                throw new FaultException<OutOfRangeFault>(fault);
-//            }
-//            catch (DbUpdateConcurrencyException e)
-//            {
-//                ConcurrencyFault fault = new ConcurrencyFault();
-//
-//                throw new FaultException<ConcurrencyFault>(fault);
-//            }
-//                  
-//        }
-
         public void updateKunde(KundeDto kunde)
         {
             WriteActualMethod();

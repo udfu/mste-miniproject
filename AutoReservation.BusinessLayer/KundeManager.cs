@@ -49,43 +49,12 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        public void UpdateKunde(int id, DateTime Geburtsdatum, String Nachname, String Vorname)
-        {
-            using (AutoReservationContext context = new AutoReservationContext())
-            {
-                Kunde kunde = context
-                    .Kunden
-                    .Single(c => c.Id == id);
-
-                if (kunde.Id != id)
-                {
-                    kunde.Id = id;
-                }
-                if (kunde.Geburtsdatum != Geburtsdatum)
-                {
-                    kunde.Geburtsdatum = Geburtsdatum;
-                }
-                if (kunde.Nachname != Nachname && Nachname != null)
-                {
-                    kunde.Nachname = Nachname;
-                }
-                if (kunde.Vorname != Vorname && Vorname != null)
-                {
-                    kunde.Vorname = Vorname;
-                }
-                context.SaveChanges();
-            }
-        }
-
         public void UpdateKunde(Kunde updatedKunde)
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-               
                 context.Entry(updatedKunde).State = EntityState.Modified;
                 context.SaveChanges();
-
-                
             }
         }
 
