@@ -3,6 +3,7 @@ using AutoReservation.Dal.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoReservation.BusinessLayer
 {
@@ -80,16 +81,11 @@ namespace AutoReservation.BusinessLayer
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                Kunde kunde = context
-                    .Kunden
-                    .Single(c => c.Id == updatedKunde.Id);
-
-                kunde.Id = updatedKunde.Id;
-                kunde.Geburtsdatum = updatedKunde.Geburtsdatum;
-                kunde.Vorname = updatedKunde.Vorname;
-                kunde.Nachname = updatedKunde.Nachname;
-
+               
+                context.Entry(updatedKunde).State = EntityState.Modified;
                 context.SaveChanges();
+
+                
             }
         }
 

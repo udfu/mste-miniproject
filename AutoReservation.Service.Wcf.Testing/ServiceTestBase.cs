@@ -153,18 +153,18 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void UpdateKundeTest()
         {
-            string lastName = "Fuoco";
-            string name = "Dario";
-            DateTime birthDate = new DateTime(1995, 12, 12);
-            int id = 1;
 
-            KundeDto kunde = new KundeDto(id, lastName, name, birthDate);
+            KundeDto kunde = Target.ReadKundeDto(1);
+
+            kunde.Nachname = "Fuoco";
+
+           
 
             Target.updateKunde(kunde);
 
 //            KundeDto expectedDto = new KundeDto(id, lastName, name, birthDate);
 
-            Assert.Equal(kunde, Target.ReadKundeDto(id));
+            Assert.Equal(kunde, Target.ReadKundeDto(1));
         }
 
         [Fact]

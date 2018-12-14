@@ -37,6 +37,7 @@ namespace AutoReservation.Common.Interfaces
 
         [OperationContract]
         [FaultContract(typeof(OutOfRangeFault))]
+        [FaultContract(typeof(ConcurrencyFault))]
         void updateKunde(KundeDto kunde);
 
         [OperationContract]
