@@ -10,12 +10,11 @@ namespace AutoReservation.BusinessLayer
     public class AutoManager
         : ManagerBase
     {
-
         public List<Auto> GetAutos()
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                return context.Autos.ToList();
+                return context.Autos.ToList<Auto>();
             }
         }
 
@@ -23,9 +22,11 @@ namespace AutoReservation.BusinessLayer
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                return context
+                Auto auto = context
                     .Autos
-                    .First(a => a.Id == id);
+                    .Single(a => a.Id == id);
+
+                return auto;
             }
         }
 
@@ -33,7 +34,7 @@ namespace AutoReservation.BusinessLayer
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                context.Add(newAuto);
+                context.Autos.Add(newAuto);
                 context.SaveChanges();
             }
         }
@@ -56,6 +57,7 @@ namespace AutoReservation.BusinessLayer
                     .First(a => a.Id == id);
 
                 context.Entry(autoToBeDeleted).State = EntityState.Deleted;
+                context.SaveChanges();
             }
         }
     }

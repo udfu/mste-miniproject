@@ -15,8 +15,7 @@ namespace AutoReservation.BusinessLayer.Testing
         [Fact]
         public void GetAutosTest()
         {
-            List<Auto> allAutos = target.GetAutos();
-            Assert.Equal(4, allAutos.Count);
+            Assert.Equal(4, Target.GetAutos().Count);
         }
 
         [Fact]
@@ -29,19 +28,33 @@ namespace AutoReservation.BusinessLayer.Testing
         [Fact]
         public void AddAutoTest()
         {
+            LuxusklasseAuto auto = new LuxusklasseAuto();
 
+            auto.Marke = "Porsche";
+            auto.Tagestarif = 300;
+            auto.Basistarif = 400;
+
+            Target.AddAuto(auto);
+
+            Assert.Equal(5, Target.GetAutos().Count);
         }
 
         [Fact]
         public void UpdateAutoTest()
         {
+            Auto auto = Target.GetAutoById(3);
 
+            auto.Marke = "Porsche";
+            Target.UpdateAuto(auto);
+
+            Assert.Equal(auto, Target.GetAutoById(3));
         }
 
         [Fact]
         public void DeleteAutoTest()
         {
-
+            Target.DeleteAuto(1);
+            Assert.Equal(3, Target.GetAutos().Count);
         }
 
     }
