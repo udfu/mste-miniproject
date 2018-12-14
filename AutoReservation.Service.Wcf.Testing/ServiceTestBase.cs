@@ -187,7 +187,7 @@ namespace AutoReservation.Service.Wcf.Testing
         public void UpdateKundeWithOptimisticConcurrencyTest()
         {
             KundeDto kunde = Target.ReadKundeDto(1);
-            KundeDto sameKunde = kunde;
+            KundeDto sameKunde = Target.ReadKundeDto(1);
 
             kunde.Nachname = "Fuoco";
             Target.updateKunde(kunde);

@@ -3,7 +3,6 @@ using AutoReservation.Dal.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace AutoReservation.BusinessLayer
 {
@@ -18,7 +17,7 @@ namespace AutoReservation.BusinessLayer
                 return kunden.ToList<Kunde>();
             }
         }
-    
+
         public Kunde GetKundeById(int id)
         {
             using (AutoReservationContext context = new AutoReservationContext())
@@ -40,31 +39,56 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        public void UpdateKunde(Kunde kunde)
+        public void AddKunde(Kunde newKunde)
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                //Kunde kunde =context
-                //    .Kunden
-                //    .Single(c => c.Id == id);
+                context.Kunden.Add(newKunde);
+                context.SaveChanges();
+            }
+        }
 
-                //if(kunde.Id != id)
-                //{
-                //    kunde.Id = id;
-                //}
-                //if(kunde.Geburtsdatum!=Geburtsdatum)
-                //{
-                //    kunde.Geburtsdatum = Geburtsdatum;
-                //}
-                //if (kunde.Nachname != Nachname && Nachname != null)
-                //{
-                //    kunde.Nachname = Nachname;
-                //}
-                //if(kunde.Vorname != Vorname && Vorname != null)
-                //{
-                //    kunde.Vorname = Vorname;
-                //}
-                context.Entry(kunde).State = EntityState.Modified;
+        public void UpdateKunde(int id, DateTime Geburtsdatum, String Nachname, String Vorname)
+        {
+            using (AutoReservationContext context = new AutoReservationContext())
+            {
+                Kunde kunde = context
+                    .Kunden
+                    .Single(c => c.Id == id);
+
+                if (kunde.Id != id)
+                {
+                    kunde.Id = id;
+                }
+                if (kunde.Geburtsdatum != Geburtsdatum)
+                {
+                    kunde.Geburtsdatum = Geburtsdatum;
+                }
+                if (kunde.Nachname != Nachname && Nachname != null)
+                {
+                    kunde.Nachname = Nachname;
+                }
+                if (kunde.Vorname != Vorname && Vorname != null)
+                {
+                    kunde.Vorname = Vorname;
+                }
+                context.SaveChanges();
+            }
+        }
+
+        public void UpdateKunde(Kunde updatedKunde)
+        {
+            using (AutoReservationContext context = new AutoReservationContext())
+            {
+                Kunde kunde = context
+                    .Kunden
+                    .Single(c => c.Id == updatedKunde.Id);
+
+                kunde.Id = updatedKunde.Id;
+                kunde.Geburtsdatum = updatedKunde.Geburtsdatum;
+                kunde.Vorname = updatedKunde.Vorname;
+                kunde.Nachname = updatedKunde.Nachname;
+
                 context.SaveChanges();
             }
         }
@@ -77,7 +101,7 @@ namespace AutoReservation.BusinessLayer
                     .Kunden
                     .Single(c => c.Id == id);
 
-                context.Kunden.Remove(kunde);    
+                context.Kunden.Remove(kunde);
                 context.SaveChanges();
             }
         }
