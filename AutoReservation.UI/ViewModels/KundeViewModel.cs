@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace AutoReservation.UI.ViewModels
 {
     public class KundeViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<KundeDto> KundenDtos { get; set; }
+        public List<KundeDto> KundenDtos { get; set; }
         public KundeDto CurrentKundeDto { get; set; }
 
         public bool DetailsVisibility { get; set; }
@@ -29,18 +30,18 @@ namespace AutoReservation.UI.ViewModels
 
         public RelayCommand<KundeDto> DeleteCommand { get; set; }
         public RelayCommand<KundeDto> SaveCommand { get; set; }
-        public RelayCommand<ObservableCollection<KundeDto>> RefreshCommand { get; set; }
+        public RelayCommand<List<KundeDto>> RefreshCommand { get; set; }
         public RelayCommand<KundeDto> AddCommand { get; set; }
 
         public KundeViewModel()
         {
-            KundenDtos = new ObservableCollection<KundeDto>(AppViewModel.Target.ReadKundeDtos());
+            KundenDtos = new List<KundeDto>(AppViewModel.Target.ReadKundeDtos());
 
             DetailsVisibility = false;
             
             DeleteCommand = new RelayCommand<KundeDto>(k => Delete(), k => CanDelete);
             SaveCommand = new RelayCommand<KundeDto>(k => Save(), k => CanSave);
-            RefreshCommand = new RelayCommand<ObservableCollection<KundeDto>>(c => Refresh());
+            RefreshCommand = new RelayCommand<List<KundeDto>>(c => Refresh());
             AddCommand = new RelayCommand<KundeDto>(k => Add());
 
             Index = -1;
@@ -87,7 +88,7 @@ namespace AutoReservation.UI.ViewModels
 
         public void Refresh()
         {
-            KundenDtos = new ObservableCollection<KundeDto>(AppViewModel.Target.ReadKundeDtos());
+            KundenDtos = new List<KundeDto>(AppViewModel.Target.ReadKundeDtos());
             CurrentKundeDto = null;
             DetailsVisibility = false;
             Index = -1;
