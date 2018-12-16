@@ -80,6 +80,9 @@
     <Compile Include="Views\KundeView.xaml.cs">
       <DependentUpon>KundeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DialogWindowView.xaml.cs">
+      <DependentUpon>DialogWindowView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ViewModels\AutoViewModel.cs" />
@@ -126,6 +129,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\KundeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DialogWindowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

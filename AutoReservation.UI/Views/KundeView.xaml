@@ -31,7 +31,7 @@
                 <Label Content="Geburtsdatum" Grid.Column="2" FontWeight="Bold" />
             </Grid>
 
-            <ListBox Name="ListOfKunde" ItemsSource="{Binding KundenDtos}" SelectedIndex="{Binding index}">
+            <ListBox Name="ListOfKunde" ItemsSource="{Binding KundenDtos}" SelectedIndex="{Binding Index}">
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="dataTransferObjects:KundeDto">
                         <Grid>

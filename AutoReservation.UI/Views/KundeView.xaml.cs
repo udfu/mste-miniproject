@@ -24,6 +24,7 @@ namespace AutoReservation.UI.Views
             KundeVm = new KundeViewModel();
             DataContext = KundeVm;
             ListOfKunde.SelectionChanged += KundeVm.SelectedIndexChanged;
+//            ListOfKunde.
         }
     }
 }
