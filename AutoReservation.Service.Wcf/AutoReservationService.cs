@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.ServiceModel;
 using AutoReservation.Common.DataTransferObjects;
 using AutoReservation.Common.Interfaces;
 using AutoReservation.BusinessLayer;
-using AutoReservation.Dal.Entities;
 using AutoReservation.Common;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +14,7 @@ namespace AutoReservation.Service.Wcf
     {
         private readonly AutoManager _autoManager = new AutoManager();
         private readonly KundeManager _kundenManager = new KundeManager();
-
+        private readonly ReservationManager _reservationManager = new ReservationManager();
 
         private static void WriteActualMethod()
             => Console.WriteLine($"Calling: {new StackTrace().GetFrame(1).GetMethod().Name}");
@@ -34,6 +32,12 @@ namespace AutoReservation.Service.Wcf
             WriteActualMethod();
 
             return DtoConverter.ConvertToDtos(_kundenManager.GetKunden());
+        }
+
+        public List<ReservationDto> ReadReservationDtos()
+        {
+            WriteActualMethod();
+            return DtoConverter.ConvertToDtos(_reservationManager.GetReservations());
         }
 
         public AutoDto ReadAutoDto(int autoId)
@@ -76,6 +80,26 @@ namespace AutoReservation.Service.Wcf
             }  
         }
 
+        public ReservationDto ReadReservationDto(int id)
+        {
+            WriteActualMethod();
+
+            try
+            {
+                return DtoConverter.ConvertToDto(_reservationManager.GetReservationById(id));
+            }
+
+            catch (InvalidOperationException)
+            {
+                OutOfRangeFault fault = new OutOfRangeFault()
+                {
+                    Operation = "Read"
+                };
+
+                throw new FaultException<OutOfRangeFault>(fault);
+            }
+        }
+
         public void InsertAuto(AutoDto newAuto)
         {
             WriteActualMethod();
@@ -88,8 +112,20 @@ namespace AutoReservation.Service.Wcf
             WriteActualMethod();
 
             _kundenManager.AddKunde(nachname, vorname, geburtsDatum);
-           }
+        }
 
+        public void insertReservation(int id, AutoDto auto, KundeDto kunde,DateTime von, DateTime bis)
+        {
+            WriteActualMethod();
+            _reservationManager.AddReservation(new ReservationDto
+            {
+                ReservationsNr = id,
+                Auto = auto,
+                Kunde = kunde,
+                Von = von,
+                Bis = bis
+            }.ConvertToEntity());
+        }
 
         public void UpdateAuto(AutoDto auto)
         {
@@ -140,6 +176,31 @@ namespace AutoReservation.Service.Wcf
            
         }
 
+        public void updateReservation(ReservationDto reservation)
+        {
+            WriteActualMethod();
+            try
+            {
+                _reservationManager.UpdateReservation(reservation.ConvertToEntity());
+            }
+            catch (InvalidOperationException)
+            {
+                OutOfRangeFault fault = new OutOfRangeFault
+                {
+                    Operation = "update"
+                };
+
+                throw new FaultException<OutOfRangeFault>(fault);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                ConcurrencyFault fault = new ConcurrencyFault();
+                throw new FaultException<ConcurrencyFault>(fault);
+            }
+
+        }
+
+
         public void DeleteAuto(int id)
         {
             WriteActualMethod();
@@ -179,7 +240,23 @@ namespace AutoReservation.Service.Wcf
             
         }
 
+        public void deleteReservation(int id)
+        {
+            WriteActualMethod();
+            try
+            {
+                _reservationManager.DeleteReservation(id);
+            }
+            catch (InvalidOperationException)
+            {
+                OutOfRangeFault fault = new OutOfRangeFault()
+                {
+                    Operation = "delete"
+                };
 
+                throw new FaultException<OutOfRangeFault>(fault);
+            }
+        }
 
     }
 }
