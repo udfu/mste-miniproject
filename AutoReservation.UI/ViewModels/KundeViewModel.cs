@@ -24,7 +24,6 @@ namespace AutoReservation.UI.ViewModels
             set {
                 _index = value;
                 SelectedIndexChanged();
-                
             }
         }
 
@@ -51,12 +50,7 @@ namespace AutoReservation.UI.ViewModels
 
         public void Delete()
         {
-            if (CurrentKundeDto == null)
-            {
-                return;
-            }
-
-            var win = new DialogWindowView();
+           var win = new DialogWindowView();
 
             if (win.ShowDialog() == true)
             {
@@ -71,7 +65,7 @@ namespace AutoReservation.UI.ViewModels
 
         public void Save()
         {
-            if (CurrentKundeDto == null || !CheckInput())
+            if (!CheckInput())
             {
                 return;
             }
