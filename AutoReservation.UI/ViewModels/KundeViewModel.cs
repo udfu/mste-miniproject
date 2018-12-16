@@ -19,10 +19,12 @@ namespace AutoReservation.UI.ViewModels
 
         public bool DetailsVisibility { get; set; }
         private int _index;
+
         public int Index
         {
-            get { return _index;}
-            set {
+            get { return _index; }
+            set
+            {
                 _index = value;
                 SelectedIndexChanged();
             }
@@ -33,16 +35,35 @@ namespace AutoReservation.UI.ViewModels
         public RelayCommand<List<KundeDto>> RefreshCommand { get; set; }
         public RelayCommand<KundeDto> AddCommand { get; set; }
 
+        public ButtonState ButtonStateNachname { get; set; }
+
+        public RelayCommand<KundeDto> NachnameCommand { get; set; }
+        public RelayCommand<KundeDto> VornameCommand { get; set; }
+        public RelayCommand<KundeDto> GeburtstagCommand { get; set; }
+
+        public ButtonState ButtonStateVorname { get; set; }
+        public ButtonState ButtonStateGeburtsdatum { get; set; }
+
         public KundeViewModel()
         {
             KundenDtos = new List<KundeDto>(AppViewModel.Target.ReadKundeDtos());
 
             DetailsVisibility = false;
-            
+
             DeleteCommand = new RelayCommand<KundeDto>(k => Delete(), k => CanDelete);
             SaveCommand = new RelayCommand<KundeDto>(k => Save(), k => CanSave);
             RefreshCommand = new RelayCommand<List<KundeDto>>(c => Refresh());
             AddCommand = new RelayCommand<KundeDto>(k => Add());
+
+            ButtonStateNachname = ButtonState.Inactive;
+            NachnameCommand = new RelayCommand<KundeDto>(k => SortingByNachname());
+
+            ButtonStateVorname = ButtonState.Inactive;
+            VornameCommand = new RelayCommand<KundeDto>(k => SortingByVorname());
+
+            ButtonStateGeburtsdatum = ButtonState.Inactive;
+            GeburtstagCommand = new RelayCommand<KundeDto>(k=> SortingByGeburtsdatum());
+
 
             Index = -1;
         }
@@ -51,7 +72,7 @@ namespace AutoReservation.UI.ViewModels
 
         public void Delete()
         {
-           var win = new DialogWindowView();
+            var win = new DialogWindowView();
 
             if (win.ShowDialog() == true)
             {
@@ -130,9 +151,8 @@ namespace AutoReservation.UI.ViewModels
             return true;
         }
 
-        public void SelectedIndexChanged(/*object sender, System.EventArgs e*/)
+        public void SelectedIndexChanged()
         {
-
             if (Index >= 0)
             {
                 CurrentKundeDto = new KundeDto(KundenDtos[Index]);
@@ -144,6 +164,82 @@ namespace AutoReservation.UI.ViewModels
             DeleteCommand.RaiseCanExecuteChanged();
             SaveCommand.RaiseCanExecuteChanged();
         }
+
+        public void SortingByNachname()
+        {
+            ButtonStateVorname = ButtonState.Inactive;
+            ButtonStateGeburtsdatum = ButtonState.Inactive;
+
+            switch (ButtonStateNachname)
+            {
+                case ButtonState.Inactive:
+                case ButtonState.Descending:
+                    ButtonStateNachname = ButtonState.Ascending;
+                    KundenDtos = new List<KundeDto>(KundenDtos.OrderBy(k => k.Nachname));
+                    break;
+
+                case ButtonState.Ascending:
+                    ButtonStateNachname = ButtonState.Descending;
+                    KundenDtos = new List<KundeDto>(KundenDtos.OrderByDescending(k => k.Nachname));
+                    break;
+            }
+
+            OnPropertyChanged(nameof(ButtonStateNachname));
+            OnPropertyChanged(nameof(ButtonStateVorname));
+            OnPropertyChanged(nameof(ButtonStateGeburtsdatum));
+            OnPropertyChanged(nameof(KundenDtos));
+        }
+
+        public void SortingByVorname()
+        {
+            ButtonStateNachname = ButtonState.Inactive;
+            ButtonStateGeburtsdatum = ButtonState.Inactive;
+
+            switch (ButtonStateVorname)
+            {
+                case ButtonState.Inactive:
+                case ButtonState.Descending:
+                    ButtonStateVorname = ButtonState.Ascending;
+                    KundenDtos = new List<KundeDto>(KundenDtos.OrderBy(k => k.Vorname));
+                    break;
+
+                case ButtonState.Ascending:
+                    ButtonStateVorname = ButtonState.Descending;
+                    KundenDtos = new List<KundeDto>(KundenDtos.OrderByDescending(k => k.Vorname));
+                    break;
+            }
+
+            OnPropertyChanged(nameof(ButtonStateNachname));
+            OnPropertyChanged(nameof(ButtonStateVorname));
+            OnPropertyChanged(nameof(ButtonStateGeburtsdatum));
+            OnPropertyChanged(nameof(KundenDtos));
+        }
+
+        public void SortingByGeburtsdatum()
+        {
+            ButtonStateNachname = ButtonState.Inactive;
+            ButtonStateVorname = ButtonState.Inactive;
+
+            switch (ButtonStateGeburtsdatum)
+            {
+                case ButtonState.Inactive:
+                case ButtonState.Descending:
+                    ButtonStateGeburtsdatum = ButtonState.Ascending;
+                    KundenDtos = new List<KundeDto>(KundenDtos.OrderBy(k => k.Geburtsdatum));
+                    break;
+
+                case ButtonState.Ascending:
+                    ButtonStateGeburtsdatum = ButtonState.Descending;
+                    KundenDtos = new List<KundeDto>(KundenDtos.OrderByDescending(k => k.Geburtsdatum));
+                    break;
+            }
+
+            OnPropertyChanged(nameof(ButtonStateNachname));
+            OnPropertyChanged(nameof(ButtonStateVorname));
+            OnPropertyChanged(nameof(ButtonStateGeburtsdatum));
+            OnPropertyChanged(nameof(KundenDtos));
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
