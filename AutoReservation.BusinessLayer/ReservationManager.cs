@@ -111,14 +111,15 @@ namespace AutoReservation.BusinessLayer
             {
                 var reservations = context
                     .Reservationen
-                    .Where(o => o.Auto.Equals(id));
+                    .Where(o => o.AutoId.Equals(id))
+                    .ToList<Reservation>();
 
-                foreach (Reservation r in reservations.ToList<Reservation>())
+                foreach (Reservation r in reservations)
                 {   
-                    if(((von <= r.Bis) && (bis>r.Von))
-                        || ((von < r.Bis) && (bis >= r.Von)) 
-                        || ((bis > r.Von) && (von <= r.Bis)) 
-                        || ((bis >= r.Von) && (von < r.Bis)))
+                    if(((von < r.Bis) && (bis>r.Von))
+                        || ((von < r.Bis) && (bis > r.Von)) 
+                        || ((bis > r.Von) && (von < r.Bis)) 
+                        || ((bis > r.Von) && (von < r.Bis)))
                     {
                         isAvailable = false;
                     }
