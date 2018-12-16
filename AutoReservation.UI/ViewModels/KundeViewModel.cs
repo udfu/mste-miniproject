@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 using AutoReservation.Common.DataTransferObjects;
@@ -12,54 +13,85 @@ namespace AutoReservation.UI.ViewModels
     {
         public ObservableCollection<KundeDto> KundenDtos { get; set; }
         public KundeDto CurrentKundeDto { get; set; }
+        
+        public bool DetailsVisibility { get; set; }
+        public int index { get; set; }
+  
         public RelayCommand<KundeDto> DeleteCommand { get; set; }
-        public RelayCommand<object[]> SaveCommand { get; set; }
+        public RelayCommand<KundeDto> SaveCommand { get; set; }
         public RelayCommand<ObservableCollection<KundeDto>> RefreshCommand { get; set; }
-
+        public RelayCommand<KundeDto> AddCommand { get; set; }
 
         public KundeViewModel()
         {
             KundenDtos = new ObservableCollection<KundeDto>(AppViewModel.Target.ReadKundeDtos());
-            DeleteCommand = new RelayCommand<KundeDto>(kunde => Remove());
-            SaveCommand = new RelayCommand<object[]>(values => Save(values));
+
+            DetailsVisibility = false;
+            index = -1;
+
+            DeleteCommand = new RelayCommand<KundeDto>(kunde => Delete());
+            SaveCommand = new RelayCommand<KundeDto>(k => Save());
             RefreshCommand = new RelayCommand<ObservableCollection<KundeDto>>(collection => Refresh());
+            AddCommand = new RelayCommand<KundeDto>(k => Add());
         }
 
-        public void Remove()
+        public void Delete()
         {
-            int index = CurrentKundeDto.Id;
             AppViewModel.Target.deleteKunde(index);
             KundenDtos.Remove(CurrentKundeDto);
-            CurrentKundeDto = null;
-            OnPropertyChanged(nameof(CurrentKundeDto));
+            
+            Refresh();
         }
 
-        public void Save(object[] values)
+        public void Save()
         {
-            CurrentKundeDto.Nachname = ((TextBox) values[0]).Text;
-            CurrentKundeDto.Vorname = ((TextBox) values[1]).Text;
-            CurrentKundeDto.Geburtsdatum = DateTime.ParseExact(((TextBox) values[2]).Text, "dd.MM.yyyy", null);
+            foreach (KundeDto collectionDto in KundenDtos)
+            {
+                if (CurrentKundeDto.Id == collectionDto.Id)
+                {
+                    AppViewModel.Target.updateKunde(CurrentKundeDto);
+                    Refresh();
+                    return;
+                }
+            }
 
-            AppViewModel.Target.updateKunde(CurrentKundeDto);
-
+            AppViewModel.Target.insertKunde(CurrentKundeDto.Nachname, CurrentKundeDto.Vorname,
+                CurrentKundeDto.Geburtsdatum);
             Refresh();
         }
 
         public void Refresh()
         {
             KundenDtos = new ObservableCollection<KundeDto>(AppViewModel.Target.ReadKundeDtos());
+            CurrentKundeDto = null;
+            DetailsVisibility = false;
+            index = -1;
+            
+            OnPropertyChanged(nameof(CurrentKundeDto));
             OnPropertyChanged(nameof(KundenDtos));
+            OnPropertyChanged(nameof(DetailsVisibility));
+            OnPropertyChanged(nameof(index));
+        }
+
+        public void Add()
+        {
+            index = -1;
+            CurrentKundeDto = new KundeDto();
+            DetailsVisibility = true;
+
+            OnPropertyChanged(nameof(index));
+            OnPropertyChanged(nameof(CurrentKundeDto));
+            OnPropertyChanged(nameof(DetailsVisibility));
         }
 
         public void SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            ListBox ourList = (ListBox) sender;
-            int index = ourList.SelectedIndex;
-            Console.WriteLine(index);
             if (index >= 0)
             {
-                CurrentKundeDto = KundenDtos[index];
+                CurrentKundeDto = new KundeDto(KundenDtos[index]);
+                DetailsVisibility = true;
                 OnPropertyChanged(nameof(CurrentKundeDto));
+                OnPropertyChanged(nameof(DetailsVisibility));
             }
         }
 

@@ -9,9 +9,9 @@
         mc:Ignorable="d"
         Title="KundeView" Height="450" Width="800">
 
-    <Window.Resources>
-        <ui:ParamConverter x:Key="ParamConverter" />
-    </Window.Resources>
+<Window.Resources>
+        <BooleanToVisibilityConverter x:Key ="BooleanToVisibility"/>
+</Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -31,7 +31,7 @@
                 <Label Content="Geburtsdatum" Grid.Column="2" FontWeight="Bold" />
             </Grid>
 
-            <ListBox Name="ListOfKunde" ItemsSource="{Binding KundenDtos}">
+            <ListBox Name="ListOfKunde" ItemsSource="{Binding KundenDtos}" SelectedIndex="{Binding index}">
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="dataTransferObjects:KundeDto">
                         <Grid>
@@ -50,8 +50,7 @@
         </StackPanel>
         <Grid Column="1">
 
-            <Grid Margin="0, 0, 5, 0">
-                <!-- <Border Background="Black" BorderThickness="1" CornerRadius="8, 0, 8, 0"> -->
+            <Grid Margin="0, 0, 5, 0" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="2*" />
@@ -64,33 +63,27 @@
                 </Grid.RowDefinitions>
                 <Label Content="Details" FontWeight="Bold" FontSize="20" />
 
-                <Label Content="Nachname" Grid.Row="1" />
-                <Label Content="Vorname" Grid.Row="2" />
-                <Label Content="Geburtsdatum" Grid.Row="3" />
+                <Label Content="Nachname" Grid.Row="1" Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}"/>
+                <Label Content="Vorname" Grid.Row="2" Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}"/>
+                <Label Content="Geburtsdatum" Grid.Row="3" Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}"/>
 
                 <TextBox Name="NachnameBox" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top"
-                         Text="{Binding CurrentKundeDto.Nachname, Mode=OneWay}" />
+                         Text="{Binding CurrentKundeDto.Nachname}" Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}"/>
 
 
                 <TextBox Name="VornameBox" Grid.Column="1" Grid.Row="2" VerticalAlignment="Top"
-                         Text="{Binding CurrentKundeDto.Vorname, Mode=OneWay}" />
+                         Text="{Binding CurrentKundeDto.Vorname}" Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}"/>
                 <TextBox Name="GeburtsdatumBox" Grid.Column="1" Grid.Row="3" VerticalAlignment="Top"
-                         Text="{Binding CurrentKundeDto.Geburtsdatum, StringFormat={}dd.MM.yyyy, Mode=OneWay}" />
+                         Text="{Binding CurrentKundeDto.Geburtsdatum, StringFormat={}dd.MM.yyyy}" Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}"/>
 
                 <WrapPanel Grid.Column="1" HorizontalAlignment="Right">
                     <Button Content="Refresh" HorizontalAlignment="left" VerticalAlignment="Top" Margin="5, 5, 2,1" Command="{Binding RefreshCommand}" />
-                    <Button Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2, 5, 2, 1" />
+                    <Button Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2, 5, 2, 1" Command="{Binding AddCommand}" />
                     <Button Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2, 5, 2,1"
                             Command="{Binding DeleteCommand}" />
                     <Button Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2, 5, 2,1"
                             Command="{Binding SaveCommand}">
-                        <Button.CommandParameter>
-                            <MultiBinding Converter="{StaticResource ParamConverter}">
-                                <Binding ElementName="NachnameBox" />
-                                <Binding ElementName="VornameBox" />
-                                <Binding ElementName="GeburtsdatumBox" />
-                            </MultiBinding>
-                        </Button.CommandParameter>
+                      
 
                     </Button>
                 </WrapPanel>

@@ -22,6 +22,21 @@ namespace AutoReservation.Common.DataTransferObjects
             Geburtsdatum = geburtsdatum;
         }
 
+        public KundeDto(KundeDto kundeDtoTemplate)
+        {
+            Id = kundeDtoTemplate.Id;
+            Nachname = String.Copy(kundeDtoTemplate.Nachname);
+            Vorname = String.Copy(kundeDtoTemplate.Vorname);
+            Geburtsdatum = kundeDtoTemplate.Geburtsdatum;
+
+            if (kundeDtoTemplate.RowVersion != null)
+            {
+                RowVersion = new byte[kundeDtoTemplate.RowVersion.Length];
+                kundeDtoTemplate.RowVersion.CopyTo(this.RowVersion, 0);
+            }
+           
+        }
+
         public override bool Equals(object obj)
         {
             if (!(obj is KundeDto))
@@ -39,6 +54,8 @@ namespace AutoReservation.Common.DataTransferObjects
 
             return false;
         }
+
+
 
         public override int GetHashCode()
         {

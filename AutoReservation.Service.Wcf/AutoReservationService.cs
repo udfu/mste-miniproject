@@ -122,7 +122,7 @@ namespace AutoReservation.Service.Wcf
             {
                 _kundenManager.UpdateKunde(kunde.ConvertToEntity());
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException)
             {
                 OutOfRangeFault fault = new OutOfRangeFault
                 {
@@ -131,7 +131,7 @@ namespace AutoReservation.Service.Wcf
 
                 throw new FaultException<OutOfRangeFault>(fault);
             }
-            catch (DbUpdateConcurrencyException e)
+            catch (DbUpdateConcurrencyException)
             {
                 ConcurrencyFault fault = new ConcurrencyFault();
 
