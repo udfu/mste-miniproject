@@ -17,7 +17,16 @@ namespace AutoReservation.UI.ViewModels
         public KundeDto CurrentKundeDto { get; set; }
 
         public bool DetailsVisibility { get; set; }
-        public int Index { get; set; }
+        private int _index;
+        public int Index
+        {
+            get { return _index;}
+            set {
+                _index = value;
+                SelectedIndexChanged();
+                
+            }
+        }
 
         public RelayCommand<KundeDto> DeleteCommand { get; set; }
         public RelayCommand<KundeDto> SaveCommand { get; set; }
@@ -29,12 +38,13 @@ namespace AutoReservation.UI.ViewModels
             KundenDtos = new ObservableCollection<KundeDto>(AppViewModel.Target.ReadKundeDtos());
 
             DetailsVisibility = false;
-            Index = -1;
-
+            
             DeleteCommand = new RelayCommand<KundeDto>(k => Delete(), k => CanDelete);
             SaveCommand = new RelayCommand<KundeDto>(k => Save(), k => CanSave);
             RefreshCommand = new RelayCommand<ObservableCollection<KundeDto>>(c => Refresh());
             AddCommand = new RelayCommand<KundeDto>(k => Add());
+
+            Index = -1;
         }
 
         public bool CanDelete => CurrentKundeDto != null;
@@ -125,10 +135,8 @@ namespace AutoReservation.UI.ViewModels
             return true;
         }
 
-        public void SelectedIndexChanged(object sender, System.EventArgs e)
+        public void SelectedIndexChanged(/*object sender, System.EventArgs e*/)
         {
-            DeleteCommand.RaiseCanExecuteChanged();
-            SaveCommand.RaiseCanExecuteChanged();
 
             if (Index >= 0)
             {
@@ -137,6 +145,9 @@ namespace AutoReservation.UI.ViewModels
                 OnPropertyChanged(nameof(CurrentKundeDto));
                 OnPropertyChanged(nameof(DetailsVisibility));
             }
+
+            DeleteCommand.RaiseCanExecuteChanged();
+            SaveCommand.RaiseCanExecuteChanged();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
