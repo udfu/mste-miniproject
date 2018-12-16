@@ -14,13 +14,15 @@ namespace AutoReservation.UI.ViewModels
         public KundeDto CurrentKundeDto { get; set; }
         public RelayCommand<KundeDto> DeleteCommand { get; set; }
         public RelayCommand<object[]> SaveCommand { get; set; }
-        
-       
+        public RelayCommand<ObservableCollection<KundeDto>> RefreshCommand { get; set; }
+
+
         public KundeViewModel()
         {
             KundenDtos = new ObservableCollection<KundeDto>(AppViewModel.Target.ReadKundeDtos());
             DeleteCommand = new RelayCommand<KundeDto>(kunde => Remove());
             SaveCommand = new RelayCommand<object[]>(values => Save(values));
+            RefreshCommand = new RelayCommand<ObservableCollection<KundeDto>>(collection => Refresh());
         }
 
         public void Remove()
@@ -37,24 +39,23 @@ namespace AutoReservation.UI.ViewModels
             CurrentKundeDto.Nachname = ((TextBox) values[0]).Text;
             CurrentKundeDto.Vorname = ((TextBox) values[1]).Text;
             CurrentKundeDto.Geburtsdatum = DateTime.ParseExact(((TextBox) values[2]).Text, "dd.MM.yyyy", null);
-           
+
             AppViewModel.Target.updateKunde(CurrentKundeDto);
 
             Refresh();
-            //            OnPropertyChanged(nameof(CurrentKundeDto));
-//            OnPropertyChanged(nameof(KundenDtos));
-           
         }
 
         public void Refresh()
         {
-            KundenDtos = new ObservableCollection<KundeDto>();
+            KundenDtos = new ObservableCollection<KundeDto>(AppViewModel.Target.ReadKundeDtos());
+            OnPropertyChanged(nameof(KundenDtos));
         }
 
         public void SelectedIndexChanged(object sender, System.EventArgs e)
         {
             ListBox ourList = (ListBox) sender;
             int index = ourList.SelectedIndex;
+            Console.WriteLine(index);
             if (index >= 0)
             {
                 CurrentKundeDto = KundenDtos[index];
