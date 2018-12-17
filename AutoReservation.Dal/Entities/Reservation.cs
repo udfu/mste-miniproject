@@ -17,9 +17,9 @@ namespace AutoReservation.Dal.Entities
         [Timestamp]
         public byte[] RowVersion { get; set; }
         
-        [NotMapped]
+        //[NotMapped]
         public Auto Auto { get; set; }
-        [NotMapped]
+        //[NotMapped]
         public Kunde Kunde { get; set; }
 
     }

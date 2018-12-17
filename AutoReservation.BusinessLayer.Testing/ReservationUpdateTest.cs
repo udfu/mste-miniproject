@@ -27,11 +27,14 @@ namespace AutoReservation.BusinessLayer.Testing
         [Fact]
         public void AddReservationTest()
         {
-            Reservation reservation = new Reservation { ReservationsNr = 5, KundeId = 1, AutoId = 1, Von = new DateTime(2018, 12, 24), Bis = new DateTime(2018, 12, 27) };
+            KundeManager km = new KundeManager();
+            AutoManager am = new AutoManager();
+            Kunde k1 = km.GetKundeById(1);
+            Auto a1 = am.GetAutoById(1);
+            Reservation reservation = new Reservation { KundeId = k1.Id, AutoId = a1.Id, Von = new DateTime(2018, 12, 24), Bis = new DateTime(2018, 12, 27) };
 
             Target.AddReservation(reservation);
-
-            Assert.Equal(reservation, Target.GetReservationById(5));
+            Assert.Equal(5, Target.GetReservations().Count);
         }
 
         [Fact]
@@ -43,7 +46,7 @@ namespace AutoReservation.BusinessLayer.Testing
             
             Target.UpdateReservation(reservation);
 
-            Assert.Equal(reservation, Target.GetReservationById(id));
+            Assert.Equal(reservation.AutoId, Target.GetReservationById(id).AutoId);
         }
 
         [Fact]

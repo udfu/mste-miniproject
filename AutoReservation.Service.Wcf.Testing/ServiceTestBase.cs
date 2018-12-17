@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ServiceModel;
 using AutoReservation.Common.DataTransferObjects;
 using AutoReservation.Common.Interfaces;
-using AutoReservation.Dal.Entities;
 using AutoReservation.TestEnvironment;
 using Xunit;
 
@@ -42,7 +41,16 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void GetReservationenTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            KundeDto k1 = new KundeDto(1, "Nass", "Anna", new DateTime(1981, 05, 05));
+            KundeDto k2 = new KundeDto(2, "Beil", "Timo", new DateTime(1980, 09, 09));
+            KundeDto k3 = new KundeDto(3, "Pfahl", "Martha", new DateTime(1990, 07, 03));
+
+            AutoDto a1 = new AutoDto("Fiat Punto", 50, AutoKlasse.Standard);
+            AutoDto a2 = new AutoDto("VW Golf", 120, AutoKlasse.Mittelklasse);
+            AutoDto a3 = new AutoDto("Audi S6", 180, AutoKlasse.Luxusklasse, 50);
+
+            List<ReservationDto> list = Target.ReadReservationDtos();
+            Assert.Equal(4, list.Count);
         }
 
         #endregion
@@ -64,7 +72,18 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void GetReservationByNrTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            KundeDto k1 = new KundeDto(1, "Nass", "Anna", new DateTime(1981, 05, 05));
+            AutoDto a1 = new AutoDto("Fiat Punto", 50, AutoKlasse.Standard);
+
+            Assert.Equal(new ReservationDto
+            {
+                ReservationsNr = 1,
+                Auto = a1,
+                Kunde = k1,
+                Von = new DateTime(2020, 01, 10),
+                Bis = new DateTime(2020, 01, 20)
+            },
+                Target.ReadReservationDto(1));
         }
 
         #endregion
@@ -86,7 +105,7 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void GetReservationByNrWithIllegalIdTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Assert.Throws<FaultException<AutoReservation.Common.OutOfRangeFault>>(() => Target.ReadReservationDto(5));
         }
 
         #endregion

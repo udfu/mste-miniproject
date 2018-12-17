@@ -10,25 +10,15 @@ namespace AutoReservation.BusinessLayer
     public class ReservationManager
         : ManagerBase
     {
-
         public List<Reservation> GetReservations()
         { 
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                //return context
-                //    .Reservationen
-                //    .Include(o => o.Auto)
-                //    .Include(o => o.Kunde)
-                //    .ToList();
-
                 return context
                     .Reservationen
+                    .Include(o => o.Auto)
+                    .Include(o => o.Kunde)
                     .ToList();
-                
-                //return context
-                //    .Reservationen
-                //    .ToList();
-
             }
         }
 
@@ -57,6 +47,7 @@ namespace AutoReservation.BusinessLayer
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
+
                 context.Entry(reservation).State = EntityState.Added;
                 context.SaveChanges();
             }
