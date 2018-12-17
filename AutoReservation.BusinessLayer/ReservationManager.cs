@@ -1,4 +1,5 @@
-﻿using AutoReservation.Dal;
+﻿using AutoReservation.BusinessLayer.Exceptions;
+using AutoReservation.Dal;
 using AutoReservation.Dal.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -87,12 +88,7 @@ namespace AutoReservation.BusinessLayer
             {
                 return true;
             }
-            return false;
-        }
-
-        private Exception InvalidDateRangeException(string v)
-        {
-            throw new NotImplementedException();
+            throw new InvalidDateRangeException("date range not valid");
         }
 
         public bool IsCarAvailable(int id, DateTime von, DateTime bis)
@@ -114,6 +110,10 @@ namespace AutoReservation.BusinessLayer
                     {
                         isAvailable = false;
                     }
+                }
+                if (!isAvailable)
+                {
+                    throw new AutoUnavailableException("Car not available in this range");
                 }
                 return isAvailable;
             }

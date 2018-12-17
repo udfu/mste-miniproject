@@ -1,5 +1,5 @@
 ﻿using System;
-using AutoReservation.Dal.Entities;
+using AutoReservation.BusinessLayer.Exceptions;
 using AutoReservation.TestEnvironment;
 using Xunit;
 
@@ -39,31 +39,31 @@ namespace AutoReservation.BusinessLayer.Testing
         [Fact]
         public void ScenarioNotOkay01Test()
         {
-            Assert.False(Target.IsCarAvailable(2, new DateTime(2020, 06, 18), new DateTime(2020, 06, 25)));
+            Assert.Throws<AutoUnavailableException>(() => Target.IsCarAvailable(2, new DateTime(2020, 06, 18), new DateTime(2020, 06, 25)));
         }
 
         [Fact]
         public void ScenarioNotOkay02Test()
         {
-            Assert.False(Target.IsCarAvailable(2, new DateTime(2020, 05, 16), new DateTime(2020, 05, 20)));
+            Assert.Throws<AutoUnavailableException>(() => Target.IsCarAvailable(2, new DateTime(2020, 05, 16), new DateTime(2020, 05, 20)));
         }
 
         [Fact]
         public void ScenarioNotOkay03Test()
         {
-            Assert.False(Target.IsCarAvailable(2, new DateTime(2020, 05, 16), new DateTime(2020, 06, 20)));
+            Assert.Throws<AutoUnavailableException>(() => Target.IsCarAvailable(2, new DateTime(2020, 05, 16), new DateTime(2020, 06, 20)));
         }
 
         [Fact]
         public void ScenarioNotOkay04Test()
         {
-            Assert.False(Target.IsCarAvailable(2, new DateTime(2020, 01, 02), new DateTime(2020, 05, 20)));
+            Assert.Throws<AutoUnavailableException>(() => Target.IsCarAvailable(2, new DateTime(2020, 01, 02), new DateTime(2020, 05, 20)));
         }
 
         [Fact]
         public void ScenarioNotOkay05Test()
         {
-            Assert.False(Target.IsCarAvailable(2, new DateTime(2020, 01, 10), new DateTime(2020, 01, 20)));
+            Assert.Throws<AutoUnavailableException>(() => Target.IsCarAvailable(2, new DateTime(2020, 01, 10), new DateTime(2020, 01, 20)));
         }
     }
 }

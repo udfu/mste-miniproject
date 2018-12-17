@@ -1,4 +1,5 @@
 ﻿using System;
+using AutoReservation.BusinessLayer.Exceptions;
 using AutoReservation.TestEnvironment;
 using Xunit;
 
@@ -25,13 +26,13 @@ namespace AutoReservation.BusinessLayer.Testing
         [Fact]
         public void ScenarioNotOkay01Test()
         {
-            Assert.False(Target.DateRangeCheck(new DateTime(2020, 01, 20), new DateTime(2020, 01, 10)));
+            Assert.Throws<InvalidDateRangeException>(() => Target.DateRangeCheck(new DateTime(2020, 01, 20), new DateTime(2020, 01, 10)));
         }
 
         [Fact]
         public void ScenarioNotOkay02Test()
         {
-            Assert.False(Target.DateRangeCheck(new DateTime(2020, 01, 20), new DateTime(2020, 01, 20)));
+            Assert.Throws<InvalidDateRangeException>(() => Target.DateRangeCheck(new DateTime(2020, 01, 20), new DateTime(2020, 01, 20)));
         }
     }
 }
