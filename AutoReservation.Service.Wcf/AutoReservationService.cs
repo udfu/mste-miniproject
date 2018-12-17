@@ -7,6 +7,7 @@ using AutoReservation.Common.Interfaces;
 using AutoReservation.BusinessLayer;
 using AutoReservation.Common;
 using Microsoft.EntityFrameworkCore;
+using AutoReservation.BusinessLayer.Exceptions;
 
 namespace AutoReservation.Service.Wcf
 {
@@ -95,7 +96,6 @@ namespace AutoReservation.Service.Wcf
                 {
                     Operation = "Read"
                 };
-
                 throw new FaultException<OutOfRangeFault>(fault);
             }
         }
@@ -116,15 +116,35 @@ namespace AutoReservation.Service.Wcf
 
         public void insertReservation(int id, AutoDto auto, KundeDto kunde,DateTime von, DateTime bis)
         {
+
             WriteActualMethod();
-            _reservationManager.AddReservation(new ReservationDto
+            try
             {
-                ReservationsNr = id,
-                Auto = auto,
-                Kunde = kunde,
-                Von = von,
-                Bis = bis
-            }.ConvertToEntity());
+                _reservationManager.AddReservation(new ReservationDto
+                {
+                    ReservationsNr = id,
+                    Auto = auto,
+                    Kunde = kunde,
+                    Von = von,
+                    Bis = bis
+                }.ConvertToEntity());
+            }
+            catch (AutoUnavailableException)
+            {
+                AutoUnavailableFault fault = new AutoUnavailableFault()
+                {
+                    Operation = "insert reservation"
+                };
+                throw new FaultException<AutoUnavailableFault>(fault);
+            }
+            catch (InvalidDateRangeException)
+            {
+                InvalidDateRangeFault fault = new InvalidDateRangeFault()
+                {
+                    Operation = "insert reservation"
+                };
+                throw new FaultException<InvalidDateRangeFault>(fault);
+            }
         }
 
         public void UpdateAuto(AutoDto auto)
@@ -197,7 +217,24 @@ namespace AutoReservation.Service.Wcf
                 ConcurrencyFault fault = new ConcurrencyFault();
                 throw new FaultException<ConcurrencyFault>(fault);
             }
+            catch (AutoUnavailableException)
+            {
+                AutoUnavailableFault fault = new AutoUnavailableFault()
+                {
+                    Operation = "update"
+                };
 
+                throw new FaultException<AutoUnavailableFault>(fault);
+            }
+            catch (InvalidDateRangeException)
+            {
+                InvalidDateRangeFault fault = new InvalidDateRangeFault()
+                {
+                    Operation = "update"
+                };
+
+                throw new FaultException<InvalidDateRangeFault>(fault);
+            }
         }
 
 
@@ -255,6 +292,24 @@ namespace AutoReservation.Service.Wcf
                 };
 
                 throw new FaultException<OutOfRangeFault>(fault);
+            }
+        }
+
+        public bool IsCarAvailable(int id, DateTime von, DateTime bis)
+        {
+            WriteActualMethod();
+            try
+            {
+                return _reservationManager.IsCarAvailable(id,von,bis);
+            }
+            catch (AutoUnavailableException)
+            {
+                AutoUnavailableFault fault = new AutoUnavailableFault()
+                {
+                    Operation = "Availability Check"
+                };
+
+                throw new FaultException<AutoUnavailableFault>(fault);
             }
         }
 

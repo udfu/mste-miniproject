@@ -10,18 +10,6 @@ namespace AutoReservation.Common.Interfaces
     [ServiceContract]
     public interface IAutoReservationService
     {
-        //        [OperationContract]
-        //        bool CheckAvailability(int autoId);
-        //
-        //        [OperationContract]
-        //        Collection<AutoDto> ReadAutoDtos(Collection<int> autoId);
-        //
-        //        [OperationContract]
-        //        AutoDto ReadAutoDto(int autoId);
-
-        //        [OperationContract]
-        //        void insertAuto(string marke, int tagestarif, )
-
 
         [OperationContract]
         List<AutoDto> ReadAutoDtos();
@@ -82,6 +70,10 @@ namespace AutoReservation.Common.Interfaces
         [OperationContract]
         [FaultContract(typeof(OutOfRangeFault))]
         void deleteReservation(int id);
+
+        [OperationContract]
+        [FaultContract(typeof(OutOfRangeFault))]
+        bool IsCarAvailable(int id, DateTime von, DateTime bis);
 
     }
 }
