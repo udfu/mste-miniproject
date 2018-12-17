@@ -62,5 +62,26 @@ namespace AutoReservation.Common.Interfaces
         [OperationContract]
         [FaultContract(typeof(OutOfRangeFault))]
         void deleteKunde(int id);
+
+        [OperationContract]
+        List<ReservationDto> ReadReservationDtos();
+
+        [OperationContract]
+        [FaultContract(typeof(OutOfRangeFault))]
+        ReservationDto ReadReservationDto(int id);
+
+        [OperationContract]
+        [FaultContract(typeof(OutOfRangeFault))]
+        void insertReservation(int id, AutoDto auto, KundeDto kunde, DateTime von, DateTime bis);
+
+        [OperationContract]
+        [FaultContract(typeof(OutOfRangeFault))]
+        [FaultContract(typeof(ConcurrencyFault))]
+        void updateReservation(ReservationDto reservation);
+
+        [OperationContract]
+        [FaultContract(typeof(OutOfRangeFault))]
+        void deleteReservation(int id);
+
     }
 }

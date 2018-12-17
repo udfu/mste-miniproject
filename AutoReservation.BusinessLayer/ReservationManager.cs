@@ -1,5 +1,6 @@
 ﻿using AutoReservation.Dal;
 using AutoReservation.Dal.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,23 @@ namespace AutoReservation.BusinessLayer
     {
 
         public List<Reservation> GetReservations()
-        {
+        { 
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                var reservations = context.Reservationen;
-                return reservations.ToList<Reservation>();
+                //return context
+                //    .Reservationen
+                //    .Include(o => o.Auto)
+                //    .Include(o => o.Kunde)
+                //    .ToList();
+
+                return context
+                    .Reservationen
+                    .ToList();
+                
+                //return context
+                //    .Reservationen
+                //    .ToList();
+
             }
         }
 
@@ -25,7 +38,7 @@ namespace AutoReservation.BusinessLayer
             {
                 Reservation reservation = context
                     .Reservationen
-                    .Single(c => c.ReservationsNr == id);
+                    .SingleOrDefault(c => c.ReservationsNr == id);
 
                 return reservation;
             }
@@ -35,7 +48,7 @@ namespace AutoReservation.BusinessLayer
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                context.Reservationen.Add(new Reservation { ReservationsNr = id, KundeId = kundeId, AutoId = autoId, Von = von, Bis = bis  });
+                context.Reservationen.Add(new Reservation { ReservationsNr = id, KundeId = kundeId, AutoId = autoId, Von = von, Bis = bis });
                 context.SaveChanges();
             }
         }
@@ -44,20 +57,22 @@ namespace AutoReservation.BusinessLayer
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                context.Reservationen.Add(reservation);
+                context.Entry(reservation).State = EntityState.Added;
                 context.SaveChanges();
             }
         }
 
 
-        public void UpdateReservation(int id,int kundeId, int autoId, DateTime von, DateTime bis)
+        public void UpdateReservation(Reservation reservation)
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                Reservation reservation = context
-                    .Reservationen
-                    .Single(c => c.ReservationsNr == id);
-                
+
+                if (DateRangeCheck(reservation.Von, reservation.Bis) && IsCarAvailable(reservation.AutoId, reservation.Von, reservation.Bis))
+                {
+                    context.Entry(reservation).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
             }
         }
 
@@ -65,47 +80,23 @@ namespace AutoReservation.BusinessLayer
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                Reservation reservation = context
+                Reservation reservationToBeDeleted = context
                     .Reservationen
-                    .Single(c => c.ReservationsNr == id);
+                    .First(a => a.ReservationsNr == id);
 
-                context.Reservationen.Remove(reservation);
+                context.Entry(reservationToBeDeleted).State = EntityState.Deleted;
                 context.SaveChanges();
             }
-        }
-
-        private bool areForeignKeysValid(int AutoId, int KundeId)
-        {
-            using (AutoReservationContext context = new AutoReservationContext())
-            {
-                Kunde kunde = context
-                    .Kunden
-                    .Single(c => c.Id == KundeId);
-
-                Auto auto = context
-                    .Autos
-                    .Single(c => c.Id == AutoId);
-
-                //var query = 
-                //    from k in context.Kunden
-                //    where k.Id
-
-                //if(kunde.)
-                //{
-
-                //}
-            }
-            return false;
         }
 
         public bool DateRangeCheck(DateTime von, DateTime bis)
         {
             TimeSpan diff = bis.Subtract(von);
-            if(bis>von && diff.Hours>=24)
+            if (bis > von && diff.Days >= 1)
             {
                 return true;
             }
-            throw InvalidDateRangeException("not a valid reservation range");
+            return false;
         }
 
         private Exception InvalidDateRangeException(string v)
@@ -113,9 +104,29 @@ namespace AutoReservation.BusinessLayer
             throw new NotImplementedException();
         }
 
-        public bool IsCarAvailable(int id)
+        public bool IsCarAvailable(int id, DateTime von, DateTime bis)
         {
-            return false;
+            bool isAvailable = true;
+            using (AutoReservationContext context = new AutoReservationContext())
+            {
+                var reservations = context
+                    .Reservationen
+                    .Where(o => o.AutoId.Equals(id))
+                    .ToList<Reservation>();
+
+                foreach (Reservation r in reservations)
+                {   
+                    if(((von < r.Bis) && (bis>r.Von))
+                        || ((von < r.Bis) && (bis > r.Von)) 
+                        || ((bis > r.Von) && (von < r.Bis)) 
+                        || ((bis > r.Von) && (von < r.Bis)))
+                    {
+                        isAvailable = false;
+                    }
+                }
+                return isAvailable;
+            }
         }
+
     }
 }
