@@ -30,16 +30,16 @@ namespace AutoReservation.UI.ViewModels
             }
         }
 
-        public RelayCommand<KundeDto> DeleteCommand { get; set; }
-        public RelayCommand<KundeDto> SaveCommand { get; set; }
-        public RelayCommand<List<KundeDto>> RefreshCommand { get; set; }
-        public RelayCommand<KundeDto> AddCommand { get; set; }
+        public RelayCommand DeleteCommand { get; set; }
+        public RelayCommand SaveCommand { get; set; }
+        public RelayCommand RefreshCommand { get; set; }
+        public RelayCommand AddCommand { get; set; }
 
         public ButtonState ButtonStateNachname { get; set; }
 
-        public RelayCommand<KundeDto> NachnameCommand { get; set; }
-        public RelayCommand<KundeDto> VornameCommand { get; set; }
-        public RelayCommand<KundeDto> GeburtstagCommand { get; set; }
+        public RelayCommand NachnameCommand { get; set; }
+        public RelayCommand VornameCommand { get; set; }
+        public RelayCommand GeburtstagCommand { get; set; }
 
         public ButtonState ButtonStateVorname { get; set; }
         public ButtonState ButtonStateGeburtsdatum { get; set; }
@@ -50,19 +50,19 @@ namespace AutoReservation.UI.ViewModels
 
             DetailsVisibility = false;
 
-            DeleteCommand = new RelayCommand<KundeDto>(k => Delete(), k => CanDelete);
-            SaveCommand = new RelayCommand<KundeDto>(k => Save(), k => CanSave);
-            RefreshCommand = new RelayCommand<List<KundeDto>>(c => Refresh());
-            AddCommand = new RelayCommand<KundeDto>(k => Add());
+            DeleteCommand = new RelayCommand(() => Delete(), () => CanDelete);
+            SaveCommand = new RelayCommand(() => Save(), () => CanSave);
+            RefreshCommand = new RelayCommand(() => Refresh());
+            AddCommand = new RelayCommand(() => Add());
 
             ButtonStateNachname = ButtonState.Inactive;
-            NachnameCommand = new RelayCommand<KundeDto>(k => SortingByNachname());
+            NachnameCommand = new RelayCommand(() => SortingByNachname());
 
             ButtonStateVorname = ButtonState.Inactive;
-            VornameCommand = new RelayCommand<KundeDto>(k => SortingByVorname());
+            VornameCommand = new RelayCommand(() => SortingByVorname());
 
             ButtonStateGeburtsdatum = ButtonState.Inactive;
-            GeburtstagCommand = new RelayCommand<KundeDto>(k=> SortingByGeburtsdatum());
+            GeburtstagCommand = new RelayCommand(()=> SortingByGeburtsdatum());
 
             Index = -1;
         }
@@ -183,10 +183,7 @@ namespace AutoReservation.UI.ViewModels
                     break;
             }
 
-            OnPropertyChanged(nameof(ButtonStateNachname));
-            OnPropertyChanged(nameof(ButtonStateVorname));
-            OnPropertyChanged(nameof(ButtonStateGeburtsdatum));
-            OnPropertyChanged(nameof(KundenDtos));
+            SortingOnPropertyChanged();
         }
 
         public void SortingByVorname()
@@ -208,10 +205,7 @@ namespace AutoReservation.UI.ViewModels
                     break;
             }
 
-            OnPropertyChanged(nameof(ButtonStateNachname));
-            OnPropertyChanged(nameof(ButtonStateVorname));
-            OnPropertyChanged(nameof(ButtonStateGeburtsdatum));
-            OnPropertyChanged(nameof(KundenDtos));
+            SortingOnPropertyChanged();
         }
 
         public void SortingByGeburtsdatum()
@@ -233,6 +227,11 @@ namespace AutoReservation.UI.ViewModels
                     break;
             }
 
+           SortingOnPropertyChanged();
+        }
+
+        public void SortingOnPropertyChanged()
+        {
             OnPropertyChanged(nameof(ButtonStateNachname));
             OnPropertyChanged(nameof(ButtonStateVorname));
             OnPropertyChanged(nameof(ButtonStateGeburtsdatum));
