@@ -29,7 +29,7 @@ namespace AutoReservation.BusinessLayer
             {
                 Reservation reservation = context
                     .Reservationen
-                    .SingleOrDefault(c => c.ReservationsNr == id);
+                    .Single(c => c.ReservationsNr == id);
 
                 return reservation;
             }
@@ -48,12 +48,10 @@ namespace AutoReservation.BusinessLayer
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-
                 context.Entry(reservation).State = EntityState.Added;
                 context.SaveChanges();
             }
         }
-
 
         public void UpdateReservation(Reservation reservation)
         {

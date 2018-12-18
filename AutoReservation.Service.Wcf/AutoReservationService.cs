@@ -87,7 +87,8 @@ namespace AutoReservation.Service.Wcf
 
             try
             {
-                return DtoConverter.ConvertToDto(_reservationManager.GetReservationById(id));
+                //return DtoConverter.ConvertToDto(_reservationManager.GetReservationById(id));
+                return _reservationManager.GetReservationById(id).ConvertToDto();
             }
 
             catch (InvalidOperationException)
@@ -114,20 +115,13 @@ namespace AutoReservation.Service.Wcf
             _kundenManager.AddKunde(nachname, vorname, geburtsDatum);
         }
 
-        public void insertReservation(int id, AutoDto auto, KundeDto kunde,DateTime von, DateTime bis)
+        public void insertReservation( ReservationDto reservation)
         {
 
             WriteActualMethod();
             try
             {
-                _reservationManager.AddReservation(new ReservationDto
-                {
-                    ReservationsNr = id,
-                    Auto = auto,
-                    Kunde = kunde,
-                    Von = von,
-                    Bis = bis
-                }.ConvertToEntity());
+                _reservationManager.AddReservation(reservation.ConvertToEntity());
             }
             catch (AutoUnavailableException)
             {

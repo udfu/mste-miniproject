@@ -60,7 +60,7 @@ namespace AutoReservation.Common.Interfaces
 
         [OperationContract]
         [FaultContract(typeof(OutOfRangeFault))]
-        void insertReservation(int id, AutoDto auto, KundeDto kunde, DateTime von, DateTime bis);
+        void insertReservation(ReservationDto reservation);
 
         [OperationContract]
         [FaultContract(typeof(OutOfRangeFault))]

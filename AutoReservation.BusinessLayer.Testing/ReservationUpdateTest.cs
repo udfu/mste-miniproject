@@ -38,7 +38,7 @@ namespace AutoReservation.BusinessLayer.Testing
         }
 
         [Fact]
-        public void UpdateAutoTest()
+        public void UpdateReservationTest()
         {
             int id = 4;
             Reservation reservation = Target.GetReservationById(id);

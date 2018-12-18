@@ -16,7 +16,6 @@ namespace AutoReservation.Dal.Entities
         public DateTime Bis { get; set; }
         [Timestamp]
         public byte[] RowVersion { get; set; }
-        
         //[NotMapped]
         public Auto Auto { get; set; }
         //[NotMapped]

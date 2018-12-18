@@ -5,6 +5,8 @@ namespace AutoReservation.Common.DataTransferObjects
     public class ReservationDto
     {
         public int ReservationsNr { get; set; }
+        public int AutoId { get; set; }
+        public int KundeId { get; set; }
         public AutoDto Auto { get; set; }
         public KundeDto Kunde { get; set; }
         public DateTime Von { get; set; }
