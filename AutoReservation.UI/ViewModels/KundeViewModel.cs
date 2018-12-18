@@ -64,7 +64,6 @@ namespace AutoReservation.UI.ViewModels
             ButtonStateGeburtsdatum = ButtonState.Inactive;
             GeburtstagCommand = new RelayCommand<KundeDto>(k=> SortingByGeburtsdatum());
 
-
             Index = -1;
         }
 
