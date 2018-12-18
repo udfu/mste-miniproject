@@ -51,8 +51,8 @@ namespace AutoReservation.Common.DataTransferObjects
 
             var item = (ReservationDto)obj;
 
-            if (this.ReservationsNr == item.ReservationsNr && this.Auto == item.Auto 
-                && this.Kunde == item.Kunde & this.Von == item.Von && this.Bis == item.Bis)
+            if (this.ReservationsNr == item.ReservationsNr && this.Auto.Equals(item.Auto) 
+                && this.Kunde.Equals(item.Kunde) & this.Von == item.Von && this.Bis == item.Bis)
             {
                 return true;
             }

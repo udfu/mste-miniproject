@@ -40,6 +40,7 @@ namespace AutoReservation.Common.Interfaces
 
         [OperationContract]
         [FaultContract(typeof(OutOfRangeFault))]
+        [FaultContract(typeof(AutoUnavailableFault))]
         void insertKunde(string nachname, string vorname, DateTime geburtsDatum);
 
         [OperationContract]
@@ -59,11 +60,13 @@ namespace AutoReservation.Common.Interfaces
         ReservationDto ReadReservationDto(int id);
 
         [OperationContract]
-        [FaultContract(typeof(OutOfRangeFault))]
+        [FaultContract(typeof(InvalidDateRangeFault))]
+        [FaultContract(typeof(AutoUnavailableFault))]
         void insertReservation(ReservationDto reservation);
 
         [OperationContract]
-        [FaultContract(typeof(OutOfRangeFault))]
+        [FaultContract(typeof(InvalidDateRangeFault))]
+        [FaultContract(typeof(AutoUnavailableFault))]
         [FaultContract(typeof(ConcurrencyFault))]
         void updateReservation(ReservationDto reservation);
 
@@ -72,7 +75,7 @@ namespace AutoReservation.Common.Interfaces
         void deleteReservation(int id);
 
         [OperationContract]
-        [FaultContract(typeof(OutOfRangeFault))]
+        [FaultContract(typeof(AutoUnavailableFault))]
         bool IsCarAvailable(int id, DateTime von, DateTime bis);
 
     }

@@ -12,7 +12,7 @@ namespace AutoReservation.BusinessLayer
         : ManagerBase
     {
         public List<Reservation> GetReservations()
-        { 
+        {
             using (AutoReservationContext context = new AutoReservationContext())
             {
                 return context
@@ -28,8 +28,11 @@ namespace AutoReservation.BusinessLayer
             using (AutoReservationContext context = new AutoReservationContext())
             {
                 Reservation reservation = context
-                    .Reservationen
-                    .Single(c => c.ReservationsNr == id);
+                        .Reservationen
+                        .Include(o => o.Auto)
+                        .Include(o => o.Kunde)
+                        .Single(c => c.ReservationsNr == id)
+                    ;
 
                 return reservation;
             }
@@ -39,8 +42,12 @@ namespace AutoReservation.BusinessLayer
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                context.Reservationen.Add(new Reservation { ReservationsNr = id, KundeId = kundeId, AutoId = autoId, Von = von, Bis = bis });
-                context.SaveChanges();
+                if (DateRangeCheck(von, bis) && IsCarAvailable(autoId, von, bis))
+                {
+                    context.Reservationen.Add(new Reservation
+                        {ReservationsNr = id, KundeId = kundeId, AutoId = autoId, Von = von, Bis = bis});
+                    context.SaveChanges();
+                }
             }
         }
 
@@ -48,8 +55,12 @@ namespace AutoReservation.BusinessLayer
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                context.Entry(reservation).State = EntityState.Added;
-                context.SaveChanges();
+                if (DateRangeCheck(reservation.Von, reservation.Bis) &&
+                    IsCarAvailable(reservation.AutoId, reservation.Von, reservation.Bis))
+                {
+                    context.Entry(reservation).State = EntityState.Added;
+                    context.SaveChanges();
+                }
             }
         }
 
@@ -57,8 +68,9 @@ namespace AutoReservation.BusinessLayer
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-
-                if (DateRangeCheck(reservation.Von, reservation.Bis) && IsCarAvailable(reservation.AutoId, reservation.Von, reservation.Bis))
+                if ((reservation.AutoId.Equals(GetReservationById(reservation.ReservationsNr).AutoId) ||
+                     IsCarAvailable(reservation.AutoId, reservation.Von, reservation.Bis)) && DateRangeCheck(reservation.Von, reservation.Bis)
+                     )
                 {
                     context.Entry(reservation).State = EntityState.Modified;
                     context.SaveChanges();
@@ -86,6 +98,7 @@ namespace AutoReservation.BusinessLayer
             {
                 return true;
             }
+
             throw new InvalidDateRangeException("date range not valid");
         }
 
@@ -100,22 +113,23 @@ namespace AutoReservation.BusinessLayer
                     .ToList<Reservation>();
 
                 foreach (Reservation r in reservations)
-                {   
-                    if(((von < r.Bis) && (bis>r.Von))
-                        || ((von < r.Bis) && (bis > r.Von)) 
-                        || ((bis > r.Von) && (von < r.Bis)) 
+                {
+                    if (((von < r.Bis) && (bis > r.Von))
+                        || ((von < r.Bis) && (bis > r.Von))
+                        || ((bis > r.Von) && (von < r.Bis))
                         || ((bis > r.Von) && (von < r.Bis)))
                     {
                         isAvailable = false;
                     }
                 }
+
                 if (!isAvailable)
                 {
                     throw new AutoUnavailableException("Car not available in this range");
                 }
+
                 return isAvailable;
             }
         }
-
     }
 }

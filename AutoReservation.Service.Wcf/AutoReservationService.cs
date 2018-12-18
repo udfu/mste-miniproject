@@ -87,8 +87,7 @@ namespace AutoReservation.Service.Wcf
 
             try
             {
-                //return DtoConverter.ConvertToDto(_reservationManager.GetReservationById(id));
-                return _reservationManager.GetReservationById(id).ConvertToDto();
+               return _reservationManager.GetReservationById(id).ConvertToDto();
             }
 
             catch (InvalidOperationException)

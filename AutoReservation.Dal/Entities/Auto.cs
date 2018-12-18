@@ -14,7 +14,6 @@ namespace AutoReservation.Dal.Entities
         [Timestamp]
         public byte[] RowVersion { get; set; }
         
-
         public virtual ICollection<Reservation> Reservationen { get; set; }
 
         public override bool Equals(object obj)
