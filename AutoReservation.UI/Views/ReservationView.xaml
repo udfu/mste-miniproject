@@ -8,72 +8,279 @@
         mc:Ignorable="d"
         Title="ReservationView" Height="450" Width="800">
 
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
+        <local:IsIntEqualEnumConverter x:Key="IsIntEqualEnumConverter" />
+    </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <DockPanel Grid.Column="0">
-            <DockPanel DockPanel.Dock="Top">
-                <TextBlock DockPanel.Dock="Left">Reservationen</TextBlock>
-                <Button DockPanel.Dock="Right" HorizontalAlignment="Right">Hinzufügen</Button>
-            </DockPanel>
-            <ListView>
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Reservationsnr."/>
-                        <GridViewColumn Header="Auto ID"/>
-                        <GridViewColumn Header="Kunden ID"/>
-                        <GridViewColumn Header="Von"/>
-                        <GridViewColumn Header="Bis"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </DockPanel>
-
-        <DockPanel Grid.Column="1">
-            <DockPanel DockPanel.Dock="Top">
-                <TextBlock DockPanel.Dock="Left">Details</TextBlock>
-                <Button DockPanel.Dock="Right" HorizontalAlignment="Right">Speichern</Button>
-                <Button DockPanel.Dock="Right" HorizontalAlignment="Right">Abbrechen</Button>
-                <Button DockPanel.Dock="Right" HorizontalAlignment="Right">Löschen</Button>
-            </DockPanel>
+        <StackPanel>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+                <WrapPanel Grid.Column="0">
+                    <Button Content="Reservation" Command="{Binding ReservationCommand}" Width="80" />
+                    <Label Content="▲">
+                        <Label.Style>
+                            <Style TargetType="Label">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding ButtonStateReservation, Converter={StaticResource IsIntEqualEnumConverter}, ConverterParameter=1}"
+                                        Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <Label Content="▼">
+                        <Label.Style>
+                            <Style TargetType="Label">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding ButtonStateReservation, Converter={StaticResource IsIntEqualEnumConverter}, ConverterParameter=2}"
+                                        Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                </WrapPanel>
 
-                <TextBlock Grid.Row="0" Grid.Column="0">Reservation ID</TextBlock>
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ReservationID}"/>
+                <WrapPanel Grid.Column="1">
+                    <Button Content="Auto" Width="70" Command="{Binding VonCommand}"/>
+                    <Label Content="▲">
+                        <Label.Style>
+                            <Style TargetType="Label">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding ButtonStateVon, Converter={StaticResource IsIntEqualEnumConverter}, ConverterParameter=1}"
+                                        Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <Label Content="▼">
+                        <Label.Style>
+                            <Style TargetType="Label">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding ButtonStateVon, Converter={StaticResource IsIntEqualEnumConverter}, ConverterParameter=2}"
+                                        Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                </WrapPanel>
 
-                <TextBlock Grid.Row="1" Grid.Column="0">Auto</TextBlock>
-                <ComboBox Grid.Row="1" Grid.Column="1"></ComboBox>
+                <WrapPanel Grid.Column="2">
+                    <Button Content="Kunde" Width="70" Command="{Binding VonCommand}"/>
+                    <Label Content="▲">
+                        <Label.Style>
+                            <Style TargetType="Label">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding ButtonStateVon, Converter={StaticResource IsIntEqualEnumConverter}, ConverterParameter=1}"
+                                        Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <Label Content="▼">
+                        <Label.Style>
+                            <Style TargetType="Label">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding ButtonStateVon, Converter={StaticResource IsIntEqualEnumConverter}, ConverterParameter=2}"
+                                        Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                </WrapPanel>
+                
+                
 
-                <TextBlock Grid.Row="2" Grid.Column="0">Kunde</TextBlock>
-                <ComboBox Grid.Row="2" Grid.Column="1"></ComboBox>
+                <WrapPanel Grid.Column="3">
+                    <Button Content="Von" Width="70" Command="{Binding VonCommand}"/>
+                    <Label Content="▲">
+                        <Label.Style>
+                            <Style TargetType="Label">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding ButtonStateVon, Converter={StaticResource IsIntEqualEnumConverter}, ConverterParameter=1}"
+                                        Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <Label Content="▼">
+                        <Label.Style>
+                            <Style TargetType="Label">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding ButtonStateVon, Converter={StaticResource IsIntEqualEnumConverter}, ConverterParameter=2}"
+                                        Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                </WrapPanel>
 
-                <TextBlock Grid.Row="3" Grid.Column="0">Von</TextBlock>
-                <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
-                    <TextBox Text="{Binding Von}"/>
-                    <TextBlock>.-</TextBlock>
-                </StackPanel>
 
-                <TextBlock Grid.Row="4" Grid.Column="0">Bis</TextBlock>
-                <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
-                    <TextBox Text="{Binding Bis}"/>
-                    <TextBlock>.-</TextBlock>
-                </StackPanel>
+                <WrapPanel Grid.Column="4">
+                    <Button Content="Bis" Width="70" Command="{Binding BisCommand}" />
+                    <Label Content="▲">
+                        <Label.Style>
+                            <Style TargetType="Label">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding ButtonStateBis, Converter={StaticResource IsIntEqualEnumConverter}, ConverterParameter=1}"
+                                        Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <Label Content="▼">
+                        <Label.Style>
+                            <Style TargetType="Label">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding ButtonStateBis, Converter={StaticResource IsIntEqualEnumConverter}, ConverterParameter=2}"
+                                        Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                </WrapPanel>
+
             </Grid>
-        </DockPanel>
+
+            <ListBox Name="ListOfReservation" ItemsSource="{Binding ReservationDtos}" SelectedIndex="{Binding Index}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="dataTransferObjects:ReservationDto">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding ReservationsNr}" />
+                            <TextBlock Grid.Column="1" Text="{Binding Auto.Id}" />
+                            <TextBlock Grid.Column="2" Text="{Binding Kunde.Id}" />
+                            <TextBlock Grid.Column="3" Text="{Binding Von, StringFormat={}dd.MM.yyyy}" />
+                            <TextBlock Grid.Column="4" Text="{Binding Bis, StringFormat={}dd.MM.yyyy}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+        <Grid Column="1">
+
+            <Grid Margin="0, 0, 5, 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Label Content="Details" FontWeight="Bold" FontSize="20" />
+
+                <Label Content="ReservationsNur" Grid.Row="1"
+                       Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}" />
+                <Label Content="Auto" Grid.Row="2"
+                       Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}" />
+                <Label Content="Kunde" Grid.Row="3"
+                       Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}" />
+                <Label Content="Von" Grid.Row="4"
+                       Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}" />
+                <Label Content="Bis" Grid.Row="5"
+                       Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}" />
+
+                <TextBox Name="ReservationsNrBox" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top"
+                         Text="{Binding CurrentReservationDto.ReservationsNr}"
+                         Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}" />
+
+                <TextBox Name="AutoBox" Grid.Column="1" Grid.Row="2" VerticalAlignment="Top"
+                         Text="{Binding CurrentReservationDto.Auto.Id}"
+                         Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}" />
+                
+                <TextBox Name="KundeBox" Grid.Column="1" Grid.Row="3" VerticalAlignment="Top"
+                         Text="{Binding CurrentReservationDto.Kunde.Id}"
+                         Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}" />
+                
+                <TextBox Name="VonBox" Grid.Column="1" Grid.Row="4" VerticalAlignment="Top"
+                         Text="{Binding CurrentReservationDto.Von, StringFormat={}dd.MM.yyyy}"
+                         Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}" />
+
+                <TextBox Name="BisBox" Grid.Column="1" Grid.Row="5" VerticalAlignment="Top"
+                         Text="{Binding CurrentReservationDto.Von, StringFormat={}dd.MM.yyyy}"
+                         Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}" />
+
+
+                <WrapPanel Grid.Column="1" HorizontalAlignment="Right">
+                    <Button Content="Refresh" HorizontalAlignment="left" VerticalAlignment="Top" Margin="5, 5, 2,1"
+                            Command="{Binding RefreshCommand}" />
+                    <Button Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2, 5, 2, 1"
+                            Command="{Binding AddCommand}" />
+                    <Button Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2, 5, 2,1"
+                            Command="{Binding DeleteCommand}" />
+                    <Button Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2, 5, 2,1"
+                            Command="{Binding SaveCommand}" />
+                </WrapPanel>
+
+            </Grid>
+
+        </Grid>
+
+
     </Grid>
+
+
 </Controls:MetroWindow>
