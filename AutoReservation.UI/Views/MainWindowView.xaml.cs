@@ -19,9 +19,50 @@ namespace AutoReservation.UI.Views
     /// </summary>
     public partial class MainWindowView : Window
     {
+        private AutoView AutoView { get; set; }
+        private KundeView KundeView { get; set; }
+        private ReservationView ReservationView { get; set; }
+
         public MainWindowView()
         {
             InitializeComponent();
+            AutoView = null;
+            KundeView = null;
+            ReservationView = null;
         }
+
+        
+
+        private void Auto_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (AutoView?.Focus() == null)
+            {
+                AutoView = new AutoView();
+                AutoView.Show();
+            }
+        }
+
+
+        private void Kunde_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (KundeView?.Focus() == null)
+            {
+                KundeView = new KundeView();
+                KundeView.Show();
+            }
+        }
+
+        private void Reservation_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (ReservationView?.Focus() == null)
+            {
+                ReservationView = new ReservationView();
+                ReservationView.Show();
+            }
+        }
+
+        
+       
+
     }
 }
