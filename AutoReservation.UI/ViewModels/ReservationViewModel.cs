@@ -59,6 +59,8 @@ namespace AutoReservation.UI.ViewModels
         public ReservationViewModel()
         {
             ReservationDtos = new List<ReservationDto>(AppViewModel.Target.ReadReservationDtos());
+            KundeDtos = new List<KundeDto>(AppViewModel.Target.ReadKundeDtos());
+            AutoDtos = new List<AutoDto>(AppViewModel.Target.ReadAutoDtos());
 
             DetailsVisibility = false;
 
@@ -82,7 +84,6 @@ namespace AutoReservation.UI.ViewModels
 
             ButtonStateKunde = ButtonState.Inactive;
             KundeCommand = new RelayCommand(() => SortingByKunde());
-
 
             Index = -1;
         }
@@ -115,14 +116,16 @@ namespace AutoReservation.UI.ViewModels
             {
                 if (CurrentReservationDto.ReservationsNr == collectionDto.ReservationsNr)
                 {
+                    CurrentReservationDto.Auto = selectedAutoDto;
+                    CurrentReservationDto.Kunde = selectedKundeDto;
                     AppViewModel.Target.updateReservation(CurrentReservationDto);
                     Refresh();
                     return;
                 }
             }
 
-            CurrentReservationDto.Auto = AppViewModel.Target.ReadAutoDto(CurrentReservationDto.AutoId);
-            CurrentReservationDto.Kunde = AppViewModel.Target.ReadKundeDto(CurrentReservationDto.KundeId);
+            CurrentReservationDto.Auto = selectedAutoDto;
+            CurrentReservationDto.Kunde = selectedKundeDto;
 
 
             AppViewModel.Target.insertReservation(CurrentReservationDto);
@@ -147,6 +150,7 @@ namespace AutoReservation.UI.ViewModels
             ReservationDtos = new List<ReservationDto>(AppViewModel.Target.ReadReservationDtos());
 
             CurrentReservationDto = null;
+            selectedKundeDto = null;
             DetailsVisibility = false;
             Index = -1;
 
@@ -173,6 +177,8 @@ namespace AutoReservation.UI.ViewModels
 
         public void Add()
         {
+            selectedKundeDto = null;
+            selectedAutoDto = null;
             Index = -1;
             CurrentReservationDto = new ReservationDto();
             DetailsVisibility = true;
@@ -193,9 +199,13 @@ namespace AutoReservation.UI.ViewModels
             if (Index >= 0)
             {
                 CurrentReservationDto = new ReservationDto(ReservationDtos[Index]);
+                selectedKundeDto = CurrentReservationDto.Kunde;
+                selectedAutoDto = CurrentReservationDto.Auto;
                 DetailsVisibility = true;
                 OnPropertyChanged(nameof(CurrentReservationDto));
                 OnPropertyChanged(nameof(DetailsVisibility));
+                OnPropertyChanged(nameof(selectedKundeDto));
+                OnPropertyChanged(nameof(selectedAutoDto));
             }
 
             DeleteCommand.RaiseCanExecuteChanged();
@@ -321,7 +331,6 @@ namespace AutoReservation.UI.ViewModels
             SortingOnPropertyChanged();
         }
         
-
         public void SortingOnPropertyChanged()
         {
             OnPropertyChanged(nameof(ButtonStateReservation));
@@ -329,7 +338,6 @@ namespace AutoReservation.UI.ViewModels
             OnPropertyChanged(nameof(ButtonStateBis));
             OnPropertyChanged(nameof(ReservationDtos));
         }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 

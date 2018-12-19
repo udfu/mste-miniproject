@@ -124,8 +124,8 @@
                         </Label.Style>
                     </Label>
                 </WrapPanel>
-                
-                
+
+
 
                 <WrapPanel Grid.Column="3">
                     <Button Content="Von" Width="70" Command="{Binding VonCommand}"/>
@@ -247,14 +247,18 @@
                          Text="{Binding CurrentReservationDto.ReservationsNr}"
                          Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}" />
 
-                <TextBox Name="AutoBox" Grid.Column="1" Grid.Row="2" VerticalAlignment="Top"
-                         Text="{Binding CurrentReservationDto.AutoId}"
-                         Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}" />
-                
-                <TextBox Name="KundeBox" Grid.Column="1" Grid.Row="3" VerticalAlignment="Top"
-                         Text="{Binding CurrentReservationDto.KundeId}"
-                         Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}" />
-                
+                <ComboBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Top"   
+                  ItemsSource="{Binding AutoDtos}"        
+                  SelectedItem="{Binding selectedAutoDto}"  
+                  Margin="0.2,70.2,-0.2,0" Grid.RowSpan="2"
+                          Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}"/>
+
+                <ComboBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Top"   
+                  ItemsSource="{Binding KundeDtos}"        
+                  SelectedItem="{Binding selectedKundeDto}"  
+                  Margin="0.2,70.2,-0.2,0" Grid.RowSpan="2"
+                          Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}"/>
+
                 <TextBox Name="VonBox" Grid.Column="1" Grid.Row="4" VerticalAlignment="Top"
                          Text="{Binding CurrentReservationDto.Von, StringFormat={}dd.MM.yyyy}"
                          Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}" />
