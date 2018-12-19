@@ -100,7 +100,7 @@ namespace AutoReservation.UI.ViewModels
             {
                 return;
             }
-
+            
             foreach (ReservationDto collectionDto in ReservationDtos)
             {
                 if (CurrentReservationDto.ReservationsNr == collectionDto.ReservationsNr)
@@ -110,9 +110,26 @@ namespace AutoReservation.UI.ViewModels
                     return;
                 }
             }
-            
+
+            CurrentReservationDto.Auto = AppViewModel.Target.ReadAutoDto(CurrentReservationDto.AutoId);
+            CurrentReservationDto.Kunde = AppViewModel.Target.ReadKundeDto(CurrentReservationDto.KundeId);
+
+
             AppViewModel.Target.insertReservation(CurrentReservationDto);
             Refresh();
+        }
+
+        public int getNewReservationNr()
+        {
+            int max = 0;
+            foreach(ReservationDto r in ReservationDtos)
+            {
+                if (max < r.ReservationsNr)
+                {
+                    max = r.ReservationsNr;
+                }
+            }
+            return max + 1;
         }
 
         public void Refresh()

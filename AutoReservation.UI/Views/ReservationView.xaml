@@ -248,11 +248,11 @@
                          Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}" />
 
                 <TextBox Name="AutoBox" Grid.Column="1" Grid.Row="2" VerticalAlignment="Top"
-                         Text="{Binding CurrentReservationDto.Auto.Id}"
+                         Text="{Binding CurrentReservationDto.AutoId}"
                          Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}" />
                 
                 <TextBox Name="KundeBox" Grid.Column="1" Grid.Row="3" VerticalAlignment="Top"
-                         Text="{Binding CurrentReservationDto.Kunde.Id}"
+                         Text="{Binding CurrentReservationDto.KundeId}"
                          Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}" />
                 
                 <TextBox Name="VonBox" Grid.Column="1" Grid.Row="4" VerticalAlignment="Top"
