@@ -62,14 +62,14 @@
                 </WrapPanel>
 
                 <WrapPanel Grid.Column="1">
-                    <Button Content="Auto" Width="70" Command="{Binding VonCommand}"/>
+                    <Button Content="Auto" Width="70" Command="{Binding AutoCommand}"/>
                     <Label Content="▲">
                         <Label.Style>
                             <Style TargetType="Label">
                                 <Setter Property="Visibility" Value="Collapsed" />
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding ButtonStateVon, Converter={StaticResource IsIntEqualEnumConverter}, ConverterParameter=1}"
+                                        Binding="{Binding ButtonStateAuto, Converter={StaticResource IsIntEqualEnumConverter}, ConverterParameter=1}"
                                         Value="True">
                                         <Setter Property="Visibility" Value="Visible" />
                                     </DataTrigger>
@@ -83,7 +83,7 @@
                                 <Setter Property="Visibility" Value="Collapsed" />
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding ButtonStateVon, Converter={StaticResource IsIntEqualEnumConverter}, ConverterParameter=2}"
+                                        Binding="{Binding ButtonStateAuto, Converter={StaticResource IsIntEqualEnumConverter}, ConverterParameter=2}"
                                         Value="True">
                                         <Setter Property="Visibility" Value="Visible" />
                                     </DataTrigger>
@@ -94,14 +94,14 @@
                 </WrapPanel>
 
                 <WrapPanel Grid.Column="2">
-                    <Button Content="Kunde" Width="70" Command="{Binding VonCommand}"/>
+                    <Button Content="Kunde" Width="70" Command="{Binding KundeCommand}"/>
                     <Label Content="▲">
                         <Label.Style>
                             <Style TargetType="Label">
                                 <Setter Property="Visibility" Value="Collapsed" />
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding ButtonStateVon, Converter={StaticResource IsIntEqualEnumConverter}, ConverterParameter=1}"
+                                        Binding="{Binding ButtonStateKunde, Converter={StaticResource IsIntEqualEnumConverter}, ConverterParameter=1}"
                                         Value="True">
                                         <Setter Property="Visibility" Value="Visible" />
                                     </DataTrigger>
@@ -115,7 +115,7 @@
                                 <Setter Property="Visibility" Value="Collapsed" />
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding ButtonStateVon, Converter={StaticResource IsIntEqualEnumConverter}, ConverterParameter=2}"
+                                        Binding="{Binding ButtonStateKunde, Converter={StaticResource IsIntEqualEnumConverter}, ConverterParameter=2}"
                                         Value="True">
                                         <Setter Property="Visibility" Value="Visible" />
                                     </DataTrigger>
@@ -206,8 +206,8 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="{Binding ReservationsNr}" />
-                            <TextBlock Grid.Column="1" Text="{Binding Auto.Id}" />
-                            <TextBlock Grid.Column="2" Text="{Binding Kunde.Id}" />
+                            <TextBlock Grid.Column="1" Text="{Binding Auto.Marke}" />
+                            <TextBlock Grid.Column="2" Text="{Binding Kunde.Nachname}" />
                             <TextBlock Grid.Column="3" Text="{Binding Von, StringFormat={}dd.MM.yyyy}" />
                             <TextBlock Grid.Column="4" Text="{Binding Bis, StringFormat={}dd.MM.yyyy}" />
                         </Grid>
@@ -260,7 +260,7 @@
                          Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}" />
 
                 <TextBox Name="BisBox" Grid.Column="1" Grid.Row="5" VerticalAlignment="Top"
-                         Text="{Binding CurrentReservationDto.Von, StringFormat={}dd.MM.yyyy}"
+                         Text="{Binding CurrentReservationDto.Bis, StringFormat={}dd.MM.yyyy}"
                          Visibility="{Binding DetailsVisibility, Converter={StaticResource BooleanToVisibility}}" />
 
 

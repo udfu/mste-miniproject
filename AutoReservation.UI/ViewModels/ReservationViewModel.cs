@@ -34,7 +34,13 @@ namespace AutoReservation.UI.ViewModels
 
         public ButtonState ButtonStateReservation { get; set; }
 
+        public ButtonState ButtonStateAuto { get; set; }
+        public ButtonState ButtonStateKunde { get; set; }
+
         public RelayCommand ReservationCommand { get; set; }
+        public RelayCommand KundeCommand { get; set; }
+        public RelayCommand AutoCommand { get; set; }
+
         public RelayCommand VonCommand { get; set; }
         public RelayCommand BisCommand { get; set; }
 
@@ -59,7 +65,14 @@ namespace AutoReservation.UI.ViewModels
             VonCommand = new RelayCommand(() => SortingByVon());
 
             ButtonStateBis = ButtonState.Inactive;
-            BisCommand = new RelayCommand(() => SortingByReservation());
+            BisCommand = new RelayCommand(() => SortingByBis());
+
+            ButtonStateAuto = ButtonState.Inactive;
+            AutoCommand = new RelayCommand(() => SortingByAuto());
+
+            ButtonStateKunde = ButtonState.Inactive;
+            KundeCommand = new RelayCommand(() => SortingByKunde());
+
 
             Index = -1;
         }
@@ -97,7 +110,7 @@ namespace AutoReservation.UI.ViewModels
                     return;
                 }
             }
-
+            
             AppViewModel.Target.insertReservation(CurrentReservationDto);
             Refresh();
         }
@@ -150,6 +163,8 @@ namespace AutoReservation.UI.ViewModels
         {
             ButtonStateVon = ButtonState.Inactive;
             ButtonStateBis = ButtonState.Inactive;
+            ButtonStateAuto = ButtonState.Inactive;
+            ButtonStateKunde = ButtonState.Inactive;
 
             switch (ButtonStateReservation)
             {
@@ -172,6 +187,8 @@ namespace AutoReservation.UI.ViewModels
         {
             ButtonStateReservation = ButtonState.Inactive;
             ButtonStateBis = ButtonState.Inactive;
+            ButtonStateAuto = ButtonState.Inactive;
+            ButtonStateKunde = ButtonState.Inactive;
 
             switch (ButtonStateVon)
             {
@@ -194,6 +211,8 @@ namespace AutoReservation.UI.ViewModels
         {
             ButtonStateReservation = ButtonState.Inactive;
             ButtonStateVon = ButtonState.Inactive;
+            ButtonStateAuto = ButtonState.Inactive;
+            ButtonStateKunde = ButtonState.Inactive;
 
             switch (ButtonStateBis)
             {
@@ -211,6 +230,54 @@ namespace AutoReservation.UI.ViewModels
 
             SortingOnPropertyChanged();
         }
+
+        public void SortingByAuto()
+        {
+            ButtonStateVon = ButtonState.Inactive;
+            ButtonStateBis = ButtonState.Inactive;
+            ButtonStateKunde = ButtonState.Inactive;
+            ButtonStateReservation = ButtonState.Inactive;
+
+            switch (ButtonStateAuto)
+            {
+                case ButtonState.Inactive:
+                case ButtonState.Descending:
+                    ButtonStateAuto = ButtonState.Ascending;
+                    ReservationDtos = new List<ReservationDto>(ReservationDtos.OrderBy(k => k.Auto.Marke));
+                    break;
+
+                case ButtonState.Ascending:
+                    ButtonStateAuto = ButtonState.Descending;
+                    ReservationDtos = new List<ReservationDto>(ReservationDtos.OrderByDescending(k => k.Auto.Marke));
+                    break;
+            }
+
+            SortingOnPropertyChanged();
+        }
+
+        public void SortingByKunde()
+        {
+            ButtonStateVon = ButtonState.Inactive;
+            ButtonStateBis = ButtonState.Inactive;
+            ButtonStateAuto = ButtonState.Inactive;
+            ButtonStateReservation = ButtonState.Inactive;
+
+            switch (ButtonStateKunde)
+            {
+                case ButtonState.Inactive:
+                case ButtonState.Descending:
+                    ButtonStateKunde = ButtonState.Ascending;
+                    ReservationDtos = new List<ReservationDto>(ReservationDtos.OrderBy(k => k.Kunde.Nachname));
+                    break;
+
+                case ButtonState.Ascending:
+                    ButtonStateKunde = ButtonState.Descending;
+                    ReservationDtos = new List<ReservationDto>(ReservationDtos.OrderByDescending(k => k.Kunde.Nachname));
+                    break;
+            }
+            SortingOnPropertyChanged();
+        }
+        
 
         public void SortingOnPropertyChanged()
         {
