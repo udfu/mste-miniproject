@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ServiceModel;
 using System.Windows;
 using AutoReservation.Common.DataTransferObjects;
@@ -15,7 +16,7 @@ namespace AutoReservation.UI.Views
     {
 
         public KundeViewModel KundeVm { get; set; }
-       
+       public bool IsClosed { get; set; }
 
         public KundeView()
         {
@@ -24,5 +25,13 @@ namespace AutoReservation.UI.Views
             KundeVm = new KundeViewModel();
             DataContext = KundeVm;
         }
+
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            IsClosed = true;
+        }
+
     }
 }
