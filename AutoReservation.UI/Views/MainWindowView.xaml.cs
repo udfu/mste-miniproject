@@ -31,38 +31,45 @@ namespace AutoReservation.UI.Views
             ReservationView = null;
         }
 
-        
 
         private void Auto_OnClick(object sender, RoutedEventArgs e)
         {
-            if (AutoView?.Focus() == null)
+            if (AutoView == null || AutoView.IsClosed)
             {
                 AutoView = new AutoView();
                 AutoView.Show();
+            }
+            else
+            {
+                AutoView.Focus();
             }
         }
 
 
         private void Kunde_OnClick(object sender, RoutedEventArgs e)
         {
-            if (KundeView?.Focus() == null)
+            if (KundeView == null || KundeView.IsClosed)
             {
                 KundeView = new KundeView();
                 KundeView.Show();
+            }
+            else
+            {
+                KundeView.Focus();
             }
         }
 
         private void Reservation_OnClick(object sender, RoutedEventArgs e)
         {
-            if (ReservationView?.Focus() == null)
+            if (ReservationView == null || ReservationView.IsClosed)
             {
                 ReservationView = new ReservationView();
                 ReservationView.Show();
             }
+            else
+            {
+                ReservationView.Focus();
+            }
         }
-
-        
-       
-
     }
 }
