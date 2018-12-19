@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -13,6 +14,12 @@ namespace AutoReservation.UI.ViewModels
     {
         public List<ReservationDto> ReservationDtos { get; set; }
         public ReservationDto CurrentReservationDto { get; set; }
+        public List<AutoDto> AutoDtos { get; set; }
+        public AutoDto selectedAutoDto { get; set; }
+        public List<KundeDto> KundeDtos { get; set; }
+        public KundeDto selectedKundeDto { get; set; }
+
+
 
         public bool DetailsVisibility { get; set; }
         private int _index;
@@ -30,6 +37,7 @@ namespace AutoReservation.UI.ViewModels
         public RelayCommand DeleteCommand { get; set; }
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand RefreshCommand { get; set; }
+        public RelayCommand FilterCommand { get; set; }
         public RelayCommand AddCommand { get; set; }
 
         public ButtonState ButtonStateReservation { get; set; }
@@ -46,7 +54,8 @@ namespace AutoReservation.UI.ViewModels
 
         public ButtonState ButtonStateVon { get; set; }
         public ButtonState ButtonStateBis { get; set; }
-
+        private bool isFiltered = false;
+   
         public ReservationViewModel()
         {
             ReservationDtos = new List<ReservationDto>(AppViewModel.Target.ReadReservationDtos());
@@ -57,6 +66,7 @@ namespace AutoReservation.UI.ViewModels
             SaveCommand = new RelayCommand(() => Save(), () => CanSave);
             RefreshCommand = new RelayCommand(() => Refresh());
             AddCommand = new RelayCommand(() => Add());
+            FilterCommand = new RelayCommand(() => FilterActive());
 
             ButtonStateReservation = ButtonState.Inactive;
             ReservationCommand = new RelayCommand(() => SortingByReservation());
@@ -135,6 +145,7 @@ namespace AutoReservation.UI.ViewModels
         public void Refresh()
         {
             ReservationDtos = new List<ReservationDto>(AppViewModel.Target.ReadReservationDtos());
+
             CurrentReservationDto = null;
             DetailsVisibility = false;
             Index = -1;
@@ -144,6 +155,21 @@ namespace AutoReservation.UI.ViewModels
             OnPropertyChanged(nameof(DetailsVisibility));
             OnPropertyChanged(nameof(Index));
         }
+
+        public void FilterActive()
+        {
+            if (isFiltered)
+            {
+                isFiltered = false;
+                Refresh();
+            } else
+            {
+               ReservationDtos = new List<ReservationDto>(ReservationDtos.Where(p => p.Bis > DateTime.Today).ToList<ReservationDto>());
+                isFiltered = true;
+            }
+            SortingOnPropertyChanged();
+        }
+
 
         public void Add()
         {

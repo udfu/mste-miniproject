@@ -265,6 +265,8 @@
 
 
                 <WrapPanel Grid.Column="1" HorizontalAlignment="Right">
+                    <Button Content="Akitve" HorizontalAlignment="left" VerticalAlignment="Top" Margin="5, 5, 2,1"
+                            Command="{Binding FilterCommand}" />
                     <Button Content="Refresh" HorizontalAlignment="left" VerticalAlignment="Top" Margin="5, 5, 2,1"
                             Command="{Binding RefreshCommand}" />
                     <Button Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2, 5, 2, 1"
