@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using AutoReservation.UI.ViewModels;
+using MahApps.Metro.Controls;
 
 namespace AutoReservation.UI
 {
@@ -7,8 +8,8 @@ namespace AutoReservation.UI
         public ReservationView()
         {
             InitializeComponent();
-            // DataContext = new AutoViewModel();
-            DataContext = AutoMock.AutoShowroom;
+            ReservationViewModel ReservationVm = new ReservationViewModel();
+            DataContext = ReservationVm;
         }
     }
 }
