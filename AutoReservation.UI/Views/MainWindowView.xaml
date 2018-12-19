@@ -10,7 +10,7 @@
 
     <Window.Resources>
         <SolidColorBrush x:Key="MainColor" Color="#1ba1e2" />
-        <SolidColorBrush x:Key="SideColor" Color="White" />
+        <SolidColorBrush x:Key="SideColor" Color="white" />
 
         <Style x:Key="MenueButton" TargetType="Button">
             <Setter Property="Margin" Value="20, 0, 20, 0" />
@@ -21,11 +21,12 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Grid>
+                           
+                            <Ellipse Stroke="{TemplateBinding Foreground}" Fill="{TemplateBinding Background}"
+                                     Height="150" Width="150" />
                             <ContentPresenter Content="{TemplateBinding Content}"
                                               HorizontalAlignment="Center"
                                               VerticalAlignment="Center" />
-                            <Ellipse Stroke="{TemplateBinding Foreground}" Fill="{TemplateBinding Background}"
-                                     Height="150" Width="150" />
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -43,13 +44,13 @@
 
     <Grid>
         <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Style="{DynamicResource MenueButton}">
+            <Button Style="{DynamicResource MenueButton}" Click="Auto_OnClick">
                 <fa:FontAwesome Icon="Car" />
             </Button>
-            <Button Style="{StaticResource MenueButton}">
+            <Button Style="{StaticResource MenueButton}" Click="Kunde_OnClick">
                 <fa:FontAwesome Icon="AddressBook" />
             </Button>
-            <Button Style="{StaticResource MenueButton}">
+            <Button Style="{StaticResource MenueButton}" Click="Reservation_OnClick">
                 <fa:FontAwesome Icon="Calendar" />
             </Button>
         </WrapPanel>
