@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AutoReservation.Dal.Entities
 {
+    //[Table("...")]
     public abstract class Auto
     {
         [Key]

@@ -10,7 +10,6 @@ namespace AutoReservation.Common.Interfaces
     [ServiceContract]
     public interface IAutoReservationService
     {
-
         [OperationContract]
         List<AutoDto> ReadAutoDtos();
 

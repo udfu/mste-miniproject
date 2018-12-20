@@ -218,7 +218,9 @@ namespace AutoReservation.Service.Wcf.Testing
             Target.UpdateAuto(auto);
 
             sameAuto.Marke = "Tesla Roadster";
-            Assert.Throws<FaultException<AutoReservation.Common.ConcurrencyFault>>(() => Target.UpdateAuto(sameAuto));
+            var exception = Assert.Throws<FaultException<AutoReservation.Common.ConcurrencyFault>>(() => Target.UpdateAuto(sameAuto));
+
+            //Assert.Equal("...", exception.Detail);
         }
 
         [Fact]

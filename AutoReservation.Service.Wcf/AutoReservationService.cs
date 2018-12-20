@@ -25,7 +25,8 @@ namespace AutoReservation.Service.Wcf
         {
             WriteActualMethod();
 
-            return DtoConverter.ConvertToDtos(_autoManager.GetAutos());
+            return _autoManager.GetAutos().ConvertToDtos();
+            //return DtoConverter.ConvertToDtos(_autoManager.GetAutos());
         }
 
         public List<KundeDto> ReadKundeDtos()

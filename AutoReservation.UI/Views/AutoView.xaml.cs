@@ -12,7 +12,9 @@ namespace AutoReservation.UI.Views
         public AutoView()
         {
             InitializeComponent();
-            DataContext = AutoMock.AutoShowroom;
+
+            //DataContext = AutoMock.AutoShowroom;
+            DataContext = new AutoViewModel();
         }
 
         protected override void OnClosed(EventArgs e)
