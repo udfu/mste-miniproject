@@ -3,14 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:AutoReservation.UI"
         mc:Ignorable="d"
         Title="AutoView" Height="450" Width="800">
 
-    <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    </Window.Resources>
+    <Controls:MetroWindow.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Controls:MetroWindow.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -19,11 +20,22 @@
         </Grid.ColumnDefinitions>
 
         <DockPanel Grid.Column="0">
-            <DockPanel DockPanel.Dock="Top">
-                <TextBlock DockPanel.Dock="Left">Autos</TextBlock>
-                <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Command="{Binding AddCommand}">Hinzufügen</Button>
+            <DockPanel DockPanel.Dock="Top" Margin="6">
+                <TextBlock FontSize="36"><Run Text="Autos"/></TextBlock>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                            Padding="9"
+                            Command="{Binding RefreshCommand}">
+                        <fa:FontAwesome Icon="Refresh"/>
+                    </Button>
+                    <Button HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                            Margin="6,0,0,0" Padding="9"
+                            Command="{Binding AddCommand}">
+                        Hinzufügen
+                    </Button>
+                </StackPanel>
             </DockPanel>
-            <ListView ItemsSource="{Binding Autos}" SelectedIndex="{Binding SelectedIndex}">
+            <ListView Margin="6" ItemsSource="{Binding Autos}" SelectedIndex="{Binding SelectedIndex}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Marke" DisplayMemberBinding="{Binding Marke}"/>
@@ -36,14 +48,26 @@
         </DockPanel>
 
         <DockPanel Grid.Column="1">
-            <DockPanel DockPanel.Dock="Top">
-                <TextBlock DockPanel.Dock="Left">Details</TextBlock>
-                <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Command="{Binding SaveCommand}">Speichern</Button>
-                <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Command="{Binding DeleteCommand}">Löschen</Button>
+            <DockPanel DockPanel.Dock="Top" Margin="6">
+                <TextBlock FontSize="36"><Run Text="Details"/></TextBlock>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                            Background="#EC644B" Foreground="White"
+                            Padding="9"
+                            Command="{Binding DeleteCommand}" >
+                        <fa:FontAwesome Icon="TrashOutline"/>
+                    </Button>
+                    <Button HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                            Margin="6,0,0,0" Padding="9"
+                            Command="{Binding SaveCommand}">
+                        Speichern
+                    </Button>
+                </StackPanel>
             </DockPanel>
-            <Grid Visibility="{Binding IsDetailsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+            <Grid Margin="6" Visibility="{Binding IsDetailsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
@@ -54,25 +78,33 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0">Marke</TextBlock>
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ActiveAuto.Marke}"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Margin="6" VerticalAlignment="Center">
+                    Marke
+                </TextBlock>
+                <TextBox Grid.Row="0" Grid.Column="1" Margin="6" Text="{Binding ActiveAuto.Marke}"/>
 
-                <TextBlock Grid.Row="1" Grid.Column="0">Typ</TextBlock>
-                <ComboBox Grid.Row="1" Grid.Column="1"
+                <TextBlock Grid.Row="1" Grid.Column="0" Margin="6" VerticalAlignment="Center">
+                    Typ
+                </TextBlock>
+                <ComboBox Grid.Row="1" Grid.Column="1" Margin="6"
                           SelectedItem="{Binding ActiveAuto.AutoKlasse}"
                           ItemsSource="{Binding AutoKlasseValues}"/>
 
-                <TextBlock Grid.Row="2" Grid.Column="0">Tagestarif</TextBlock>
-                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
-                    <TextBox Text="{Binding ActiveAuto.Tagestarif}"/>
-                    <TextBlock>.-</TextBlock>
-                </StackPanel>
+                <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="6">
+                    Tagestarif
+                </TextBlock>
+                <DockPanel Grid.Row="2" Grid.Column="1" Margin="6" HorizontalAlignment="Left">
+                    <TextBlock DockPanel.Dock="Right" Margin="6,0,0,0" VerticalAlignment="Center">CHF</TextBlock>
+                    <TextBox Text="{Binding ActiveAuto.Tagestarif}" HorizontalAlignment="Right" HorizontalContentAlignment="Right" MinWidth="85"/>
+                </DockPanel>
 
-                <TextBlock Grid.Row="3" Grid.Column="0">Basistarif</TextBlock>
-                <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
-                    <TextBox Text="{Binding ActiveAuto.Basistarif}"/>
-                    <TextBlock>.-</TextBlock>
-                </StackPanel>
+                <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="6">
+                    Basistarif
+                </TextBlock>
+                <DockPanel Grid.Row="3" Grid.Column="1" Margin="6" HorizontalAlignment="Left">
+                    <TextBlock DockPanel.Dock="Right" Margin="6,0,0,0" VerticalAlignment="Center">CHF</TextBlock>
+                    <TextBox Text="{Binding ActiveAuto.Basistarif}" HorizontalAlignment="Right" HorizontalContentAlignment="Right" MinWidth="85"/>
+                </DockPanel>
             </Grid>
         </DockPanel>
     </Grid>
