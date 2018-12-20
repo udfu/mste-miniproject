@@ -11,9 +11,16 @@
         public int? Basistarif { get; set; }
 
 
-        public AutoDto()
-        {
+        public AutoDto() { }
 
+        public AutoDto(AutoDto auto)
+        {
+            Id = auto.Id;
+            Marke = auto.Marke;
+            Tagestarif = auto.Tagestarif;
+            RowVersion = auto.RowVersion;
+            AutoKlasse = auto.AutoKlasse;
+            Basistarif = auto.Basistarif;
         }
 
         public AutoDto(string marke, int tagestarif, AutoKlasse autoKlasse)
