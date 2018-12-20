@@ -46,7 +46,10 @@ namespace AutoReservation.UI.ViewModels
 
         public KundeViewModel()
         {
-            KundenDtos = new List<KundeDto>(AppViewModel.Target.ReadKundeDtos());
+            // KundenDtos = new List<KundeDto>(AppViewModel.Target.ReadKundeDtos());
+            KundenDtos = new List<KundeDto>();
+            KundenDtos.Add(new KundeDto(1, "Muster", "Max", DateTime.Now));
+            KundenDtos.Add(new KundeDto(1, "Kuster", "Latizia", DateTime.Today));
 
             DetailsVisibility = false;
 

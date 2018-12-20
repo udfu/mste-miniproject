@@ -1,7 +1,8 @@
-﻿using System;
+﻿using AutoReservation.UI.ViewModels;
 using MahApps.Metro.Controls;
+using System;
 
-namespace AutoReservation.UI
+namespace AutoReservation.UI.Views
 {
     public partial class AutoView : MetroWindow
     {

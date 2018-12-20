@@ -10,8 +10,9 @@
         <ListBox HorizontalAlignment="Center" VerticalAlignment="Center">
             <Label FontWeight="Bold">Möchten Sie das ausgewählte Element wirklich entfernen?</Label>
             <WrapPanel HorizontalAlignment="Center" Margin="0, 30, 0, 0">
-                <Button Content="Ja" IsDefault="true" Margin="0, 0, 20, 0" Width="50" Click="JaButton_Onclick"/>
-                <Button Content="Nein" IsCancel="True" Width="50"/>
+                <Button Content="Ja" IsDefault="True" Margin="0, 0, 20, 0" Width="70" Click="JaButton_Onclick"/>
+                <Button Content="Nein" IsCancel="True" Width="70"/>
+                <Button Content="Vielleicht" IsCancel="True" Margin="20,0,0,0" Width="70"/>
             </WrapPanel>
         </ListBox>
        
